@@ -1,6 +1,6 @@
 ![logo](./_media/logo4.png)
 
-[![GitHub stars](https://img.shields.io/github/stars/jfvilasPersonal/oberkorn.svg)](https://github.com//jfvilasPersonal/oberkorn/stargazers)
+[![GitHub stars](https://img.shields.io/github/stars/jfvilasPersonal/oberkorn.svg)](https://github.com/jfvilasPersonal/oberkorn/stargazers)
 [![GitHub stars](https://img.shields.io/badge/contributions-welcome-orange.svg)](https://github.com/jfvilasPersonal/oberkorn/blob/main/docs/CONTRIBUTING.md)
 [![GitHub stars](https://img.shields.io/badge/project-homepage-red.svg)](https://raw.githubusercontent.com/jfvilasPersonal/oberkorn/main/docs/index.html)
 
