@@ -1,4 +1,4 @@
-![logo](./_media/logo5.png)
+![logo](./_media/logo4.png)
 
 # JWT Authorizator
 JWTA is a fresh project for creating an easy way to protect web applications deployed to kubernetes clusters. Initial version has been specifically designed to work with Kubernetes and Nginx Ingresss Controller, but we have plans to add more support regading other Ingress integrations.
