@@ -2,7 +2,7 @@
 
 [![GitHub stars](https://img.shields.io/github/stars/jfvilasPersonal/oberkorn.svg)](https://github.com/jfvilasPersonal/oberkorn/stargazers)
 [![GitHub stars](https://img.shields.io/badge/contributions-welcome-orange.svg)](https://jfvilaspersonal.github.io/oberkorn/#/contributing)
-[![GitHub stars](https://img.shields.io/badge/project-homepage-red.svg)](https://jfvilaspersonal.github.io/oberkorn)
+[![GitHub stars](https://img.shields.io/badge/project-homepage-#a0a0a0.svg)](https://jfvilaspersonal.github.io/oberkorn)
 
 
 
@@ -13,7 +13,7 @@ JWTA is a fresh project for creating an easy way to protect web applications dep
 The project is fully open sourced, you can access the repositories, review the code and ask for new features. You can even help us correcting and improving the code. Any help will be welcomed!
 
 ## Docs & Getting started
-If you need some documentation on how to install and configure JWTA you can visit our home page [here](https://jfvilaspersonal.github.io/jwtauthorizator).
+If you need some documentation on how to install and configure JWTA you can visit our home page [here](https://jfvilaspersonal.github.io/oberkorn).
 
 What follows is a simple installation and starting guide.
 
