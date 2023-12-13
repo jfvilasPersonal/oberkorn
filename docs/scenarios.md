@@ -8,7 +8,7 @@ The simplest web application we can find is a classical 90-like web application,
 
 We have developed a simple application that contains only HTML, JS, CSS and images. For managing the contents of the application there exist some pages that allow administrators of the application to upload new content (new images, for example), this administration area has been created under the '/admin' path. On the other side, public access is done via '/public'.
 
->Diagram of the architecture of the application.
+![Basic scenario](/_media/scenarios/scenario-basic.png)
 
 For this application to be protected using Oberkorn we should create an Oberkorn authorizator like this:
 
@@ -52,7 +52,7 @@ One of the most useful scenarios is the one that cover the authorization needs o
 
 In an application architecture like this we tipically let the users access freely the static resources (index.html and other static files) and protect the calls to the application APIS's using a JWT token.
 
->diagram
+![SPA scenario](/_media/scenarios/scenario-spa.png)
 
 For this application to be protected using Oberkorn we should create a Oberkorn authorizator like this:
 

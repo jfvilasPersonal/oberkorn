@@ -138,6 +138,7 @@ The name of the validator, that you will use later to link a specific rule to a 
 The name of the tentant of your Entra ID service.
 
 
+### Examples
 Following you can find a sample 'validators' section inlcding three validators, two of them are based on the same Azure B2C service and the third one is based on AWS Cognito. Please note that both Azure B2C validators are based on the same Azure B2C service, but they have different name and different configuration.
 ```yaml
 validators:
@@ -168,10 +169,10 @@ validators:
 This is where you can state what rules will drive the security behaviour of your application. As the name states, the content of this section is a rule set (an array of rules, in fact).
 When a user request need to be validated, all the rules in the ruleset are evaluated unless one of them evaulates to 'true'. In this case, no more rule evaluation is performed, and a positive response is sent back to the ingress controller.
 
-##### uri
+##### uri [mandatory] [string] 
 This is a uri specification that must match user request in order to be evaluated. If the URI the user wants to access does not match this parameter, this rule will not be evaluated. URI's inside rules are relative, that is, do not include the hostname, **just the path**.
 
-##### uritype
+##### uritype [mandatory] [string] 
 Every uri in a rule can be one of this types:
 
   - 'exact'. The URI requested by the user must be exactly equal to the URI of this rule.
@@ -192,7 +193,7 @@ Second rule while be considered to be evaluated if the URI requested by the user
 The third rule will be evaluated if the requested URI matches the regex. For example, if the user requests '/media/image.jpeg', the rule will not be evaluated. But, if the requested URI is '/media/345.jpeg' the rule will be evaluated.
 
 
-##### type
+##### type [mandatory] [string] 
 Every rule has a type, which defines how the rule will be evaluated. These are the different types supported:
 
   - unrestricted
@@ -217,7 +218,7 @@ Conversely, an 'or' rule type will evaluate to 'true' if just one of the subrule
 
 The sub-rules of 'and' and 'or' rules can be specified usign the parameter 'subset' (see below).
 
-##### policy
+##### policy [optional] [string] 
 Every 'claim' rule type must have a policy. A policy states how a rule type must be evaluated. These are the curently supported policies:
 
   - present
@@ -240,7 +241,7 @@ You can find the expanation and applicability of each of the policies in followi
  | matchesall    | The claim must match (suing regex) ALL the regular expressions specified in the 'values' parameter (see below)      |
  | matchesany    | The claim must match (using regex) at least ONE of the regular expressions specified in the 'values' parameter (see below)      |
 
-##### values
+##### values [optional] [string] 
 'values' conatins an array (a list) of values used by the policy of the rule. For example, if you have a claim named 'user_attributes' which can contain any values like USER, ADMIN or MANAGER, and you want to write a rule to validate tokens emitted for managerial people (that is ADMIN and MANAGER), you should write a rule like this:
 
 ```yaml
@@ -253,7 +254,7 @@ You can find the expanation and applicability of each of the policies in followi
       - MANAGER
 ```
 
-##### options
+##### options [optional] [string] 
 When evaluation values you may need some configuration on how to perform that evaluation. You can manage it by adding a list of options. Current supported options are:
 
   - lowercase
@@ -264,8 +265,8 @@ When evaluating policies like 'is' o 'containsall', for example, you can force t
 If you do not specify lowercaso or uppercase, the comparisons will be performed using case-sensitive operators.
 
 
-##### subset
-Explain how to use rule subsets.
+##### subset [optional] [string] 
+> Explain how to use rule subsets.
 
 #### Behaviours: ontrue & onfalse
 A behaviour is a specification on how the rule engine must manage the result of the evaluation of a rule. A behaviour can be specified positively or negatively, that is, you can indicate what to do when a positive evaluation (true) is received, and what to do when receiving a negative evaluation (false).
@@ -302,6 +303,6 @@ JWT Authorizator (including controller and authorizator modules) has been succes
 | Ingress | Version | Notes |
 |-|-|-|
 | Ingress Nginx | 1.9.4 <br/> 1.8.9 ||
-| NGINX Ingress | 3.3.2 ||
+| NGINX Ingress | 3.3.2 <br/> 3.3.1 ||
 | HA Proxy Ingress | TBT ||
 | Traefik Ingress | 2.10.7 ||

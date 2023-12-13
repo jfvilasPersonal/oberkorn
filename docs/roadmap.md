@@ -1,6 +1,5 @@
 # Roadmap
 
-
 ## Features
 The new features added to the project will probably evolve following two different lines. We will add new features to the authorizator module in order to have a very rich and capable JWT Authorizator component. On the other side, we will add new features to the controller module in order to provide a flexible and operable controller that can ease your operation processes when managing your kubernetes clusters. 
 
