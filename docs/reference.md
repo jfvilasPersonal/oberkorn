@@ -1,8 +1,8 @@
 # Reference
-Here you can find reference for creating and operating a JWT authorizator. This reference page documents all the parameters you can/must code in a YAML file in order to create an authorizator via 'kubectl apply -f'.
+Here you can find reference for creating and operating an Oberkorn authorizator. This reference page documents all the parameters you can/must code in a YAML file in order to create an authorizator via 'kubectl apply -f'.
 
 ## YAML
-To create a JWT Authorizator you must create a YAML file containing all the configuration that defines your needs to protect your web applications running in the Kubernetes cluster. This is a basic (minimal, with no rule restrictions) JWT Authorizator:
+To create an Oberkorn authorizator you must create a YAML file containing all the configuration that defines your needs to protect your web applications running in the Kubernetes cluster. This is a basic (minimal, with no rule restrictions) JWT Authorizator:
 
 ```yaml
 apiVersion: jfvilas.at.outlook.com/v1
@@ -85,7 +85,7 @@ ingress:
 ## **validators**
 The validators section contains a set of validators of different types that you will use for protecting your applications.
 
-Each validator has its own type, and thus its own specific paramters to configure it. In current version of JWTA following validators are supported:
+Each validator has its own type, and thus its own specific paramters to configure it. In current version of Oberkorn following validators are supported:
 
   - Azure B2C
   - AWS Cognito

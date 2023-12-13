@@ -7,13 +7,13 @@
 
 
 
-# JWT Authorizator
-JWTA is a fresh project for creating an easy way to protect web applications deployed to kubernetes clusters. Initial version has been specifically designed to work with Kubernetes and Nginx Ingresss Controller, but we have plans to add more support regading other Ingress integrations.
+# Oberkorn
+Oberkorn is a fresh project for creating an easy way to protect web applications deployed to kubernetes clusters based on JWT authorization mechanisms. Initial version has been specifically designed to work with Kubernetes and Nginx Ingresss Controller, but we are actively adding more support regarding other Ingress integrations.
 
-The project is fully open sourced, you can access the repositories, review the code and ask for new features. You can even help us correcting and improving the code. Any help will be welcomed!
+The project is fully open sourced, you can access the repositories, review the code and ask for new features. You can even help us correcting and improving the code. [Any help will be welcomed](contributing)!
 
 ## Docs & Getting started
-If you need some documentation on how to install and configure JWTA you can visit our home page [here](https://jfvilaspersonal.github.io/oberkorn).
+If you need some documentation on how to install and configure Oberkorn you can visit our home page [here](https://jfvilaspersonal.github.io/oberkorn).
 
 What follows is a simple installation and starting guide.
 
@@ -43,7 +43,7 @@ The controller YAML contains several kubernetes resources:
 You can check whether the controller is ready by examining controller stdout (the logs of the pod) and searching for the message "JWTA controller is watching events...".
 
 ### Your first authorizator
-Once the setup is completed (and the controller has fully started) you can create your first JWTA authorizator. Next you can find a simple authorizator code to protect access to a typical SPA (Angular, React...) application served from "/" (your root URI) and accesing a REST APIs published under "/api". In this example the access to the web application is protected using JWT tokens emitted by an AWS Cognito service. In addition, your web application must be accesible from outside kubernetes cluster through an Nginx Ingress Controller (named 'sample-nginx-ingress' in namespace 'test' in this example).
+Once the setup is completed (and the controller has fully started) you can create your first JWTA authorizator. Next you can find a simple authorizator code to protect access to a typical SPA (Angular, React...) application served from "/" (your root URI) and accesing REST APIs published under "/api". In this example the access to the web application is protected using JWT tokens emitted by an AWS Cognito service. In addition, your web application must be accesible from outside kubernetes cluster through an Nginx Ingress Controller (named 'sample-nginx-ingress' in namespace 'test' in this example).
 
 ```yaml
 apiVersion: jfvilas.at.outlook.com/v1
@@ -57,6 +57,7 @@ spec:
   ingress:
     name: sample-nginx-ingress
     class: nginx
+    provider: nginx-ingress
   validators:
     - cognito:
         name: cognito-validator
@@ -76,12 +77,13 @@ spec:
 
 And that's it!
 
-Please check [our homepage](https://jfvilaspersonal.github.io/jwtauthorizator) with all the **details of the project** and **reference documentation** on how to create and configure authorizators for **different scenarios**.
+Please check [our homepage](https://jfvilaspersonal.github.io/oberkorn) with all the **details of the project** and **reference documentation** on how to create and configure authorizators for **different scenarios**.
 
 
 ## Architecture primer
 Include here a small explanation on the architecture of JWTA, and route readers to homepage.
 
+>image and minimal explanation
 
 ## Repository
 This repository conatins only the documentation of the project. The whole project is made up of three other projects:

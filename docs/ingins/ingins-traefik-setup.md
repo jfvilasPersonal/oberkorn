@@ -1,8 +1,8 @@
 # Traefik setup
-This document will guide you thru the process of installing and configuring a Traefik ingress controller in order to test JWTA.
+This document will guide you thru the process of installing and configuring a Traefik ingress controller in order to test Oberkorn.
 
 ## Install Traefik
-Installing traefik is real simple. The only issue you can find is to have a clear documentation for a simple kubernetes deploymment. This guide includes all the steps for deploying Traefik v2.10 for testing JWTA.
+Installing traefik is real simple. The only issue you can find is to have a clear documentation for a simple kubernetes deploymment. This guide includes all the steps for deploying Traefik v2.10 for testing Oberkorn.
 
 ### Step 1. the basics
 Create Namespace, ClusterRole and Service Account
@@ -22,7 +22,7 @@ Once everything is installed, create an Ingress for our demo purposes.
 
 
 ## Install demo application
-Our demo application is in [one of our repositories](./demo), and it is just a tuned nginx with an index.html page that we will use for testing JWTA using different IdM (Azure B2C, AWS Cognito and Keycloak)
+Our demo application is in [one of our repositories](./demo), and it is just a tuned nginx with an index.html page that we will use for testing Oberkorn using different IdM (Azure B2C, AWS Cognito and Keycloak)
 
 Deploying our demo application is simple and straightforward, you just only need to apply a YAML to your kubernetes cluster:
 

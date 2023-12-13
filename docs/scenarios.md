@@ -1,7 +1,7 @@
 # JWT Authorizator usage scenarios
-In this section you will find different typical scenarios whe JWTA can be used. Please review them and check if any of them matches your needs.
+In this section you will find different typical scenarios where Oberkorn can be used. Please review them and check if any of them matches your needs.
 
-If you have an scenarios that is not covered here, please contact us in order to review it and help you on how to configure JWTA to protect your applications.
+If you have a scenario that is not covered here, please contact us in order to review it and help you on how to configure Oberkorn to protect your applications.
 
 ## Basic scenario: a static HTML application
 The simplest web application we can find is a classical 90-like web application, that is, a static HTML application containing static resources only. In such an application we may find the need for protecting some parts of the application, for example restrict the administrators area. Let's work on a simple sample.
@@ -10,7 +10,7 @@ We have developed a simple application that contains only HTML, JS, CSS and imag
 
 >Diagram of the architecture of the application.
 
-For this application to be protected using JWTA we should create a JWTA Authorizator like this:
+For this application to be protected using Oberkorn we should create an Oberkorn authorizator like this:
 
 ```yaml
 apiVersion: jfvilas.at.outlook.com/v1
@@ -54,7 +54,7 @@ In an application architecture like this we tipically let the users access freel
 
 >diagram
 
-For this application to be protected using JWTA we should create a JWTA Authorizator like this:
+For this application to be protected using Oberkorn we should create a Oberkorn authorizator like this:
 
 ```yaml
 apiVersion: jfvilas.at.outlook.com/v1
@@ -83,8 +83,8 @@ spec:
       uritype: "prefix"
       type: "unrestricted"
 ```
-This YAML will create a JWTA authorizator which works like this:
-  1. When the Nginx Ingress Controller named 'sample-nginx-ingress' (in namespace 'test') receives an HTTP request, it routes the request to the JWTA authorizator.
+This YAML will create an Oberkorn authorizator which works like this:
+  1. When the Nginx Ingress Controller named 'sample-nginx-ingress' (in namespace 'test') receives an HTTP request, it routes the request to the Oberkorn authorizator.
   2. The authorizator checks all the rules in the ruleset.
   3. If any rule evaluates to true, the authorizator answers the ingress with a positive response (HTTP 200).
   4. The ingress then re-routes the request to the appropriate backend.
@@ -102,7 +102,7 @@ Securing classic transactional web applications is somehow similar to classic st
   3. Static resurces like images, styles and javascript is served from: /media, /css and /js respectively.
   4. Let's suppose there is an Azure B2C in place for protecting this applications.
 
-In order to build a protection layer based on JWTA we should deploy a JWTA authorizator like this one:
+In order to build a protection layer based on Oberkorn we should deploy an Oberkorn authorizator like this one:
 
 ```yaml
 apiVersion: jfvilas.at.outlook.com/v1
@@ -178,7 +178,7 @@ spec:
 ```
 Please be aware of the order of processing: second rule is less restrictive, but it is executed only in the case the first rule did not match the requested URI. If requested URI matches 2023, first rule would be the last rule to evaluate, since 'ontrue' is 'accept' (default behaviour) and 'onfalse' has been set to 'reject'.
 
-Another way to configure protection for WordPress applications is to use custom permalinks and configure the JWTA ruleset accordingly. When you create a custom permalink format you can use this variables:
+Another way to configure protection for WordPress applications is to use custom permalinks and configure the auhtorizator ruleset accordingly. When you create a custom permalink format you can use this variables:
 
 | Variable | Meaning |
 |--|--|

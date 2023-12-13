@@ -1,5 +1,5 @@
 # Ingress configuration
-Installing JWTA is very easy., but maybe you need some help on configuring your Ingress. Following you will find some special actions you must perform on the different types of ingresses that JWTA supports in order to make them work with external auth.
+Installing Oberkorn is very easy., but maybe you need some help on configuring your Ingress. Following you will find some special actions you must perform on the different types of ingresses that Oberkorn supports in order to make them work with external auth.
 
 
 ## Ingress Nginx
@@ -7,7 +7,7 @@ TBD
 
 
 ## NGINX Ingress
-You need to modify the deployment of the ingress to enable snippets (snippets are the way JWTA configures your ingress to support external authorization).
+You need to modify the deployment of the ingress to enable snippets (snippets are the way Oberkorn configures your ingress to support external authorization).
 
 ```yaml
   args:

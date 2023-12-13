@@ -1,5 +1,5 @@
-# JWT Authorizator
-JWTA is a fresh project for creating an easy way to protect web applications deployed to kubernetes clusters. Initial version has been spscifically designed to work with Kubernetes and Nginx Ingresss Controller, but we have plans to add more support regarding other ingresses integrations.
+# Oberkorn
+Oberkorn is a fresh project for creating an easy way to protect web applications deployed to kubernetes clusters. Initial version has been spscifically designed to work with Kubernetes and Nginx Ingresss Controller, but we have plans to add more support regarding other ingresses integrations.
 
 The project is fully open sourced, you can access the repositories [here](https://github.com/jfvilasPersonal/jwta-controller) and [here](https://github.com/jfvilasPersonal/jwta-authorizator) (two repositories for storing code of the two main project components).
 
@@ -20,7 +20,7 @@ The flow is as follows:
   2. You apply the YAML to create the authorizator: 'kubectl apply -f your-authorizator-code.yaml'.
   3. The controller, which is listening for 'JwtAuthorizator' events receives an 'ADDED' event, so the controller creates all the resources needed to deploy an authorizator (a pod, a service, and, optionally, it configures your ingress to point its authorization needs to the new JwtAuthorizator).
   4. You can make changes to your auhtorizator (like changing scale process, modifying the ruleset...), so when you apply a new YAML the controller receives a 'MODIFIED' event and it performs requested changes.
-  5. When you no longer need an Authorizator, you can 'kubectl delete' it and the controller will receive a 'DLETED' event and it will deprovision all previously provisioned resources (and optional configuration).
+  5. When you no longer need an Authorizator, you can 'kubectl delete' it and the controller will receive a 'DELETED' event and it will deprovision all previously provisioned resources (and optional configuration).
 
 ### Data plane
 And this is how a JWT Authorizator works:
@@ -36,5 +36,5 @@ The flow is as follows:
   6. If the access is granted (at least a rule evaluates to 'true'), the ingress sends the request to the backend (typically a service inside the kubernetes cluster). If the response form the authorizator is 'false', a 4xx HTTP status code is sent back to the customer.
 
 ## Architecture
-JWTA is build around two separate resources: **the controller** (in charge of the control plane) and **the authorizator** (repsonsible of the data plane). The architecture of the whole project is depicted below.
+Oberkorn is build around two separate resources: **the controller** (in charge of the control plane) and **the authorizator** (repsonsible of the data plane). The architecture of the whole project is depicted below.
 

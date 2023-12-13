@@ -1,7 +1,7 @@
 # JWT Authorizator use cases
 In this section you will find different typical use cases. These are not complete scenarios, what we include here are specific solutions to typical authorization needs.
 
-If you have an use case that is not covered here, please contact us in order to review it and help you on how to configure JWTA to cover your use case.
+If you have an use case that is not covered here, please contact us in order to review it and help you on how to configure Oberkorn to cover your use case.
 
 In next sections we will discuss different use cases, but showing only the ruleset needed to implement the case. 
 
@@ -44,7 +44,7 @@ ruleset:
 In this case, if a valid token is not presented by the user (via 'Authorization' HTTP header) the request is rejected. But, if a valid token is present, the rule engine will continue processing the rest of the rules in the ruleset.
 
 ## API protection
-If you want to protect access to an API resource the most simple rule is this one: for a user to access and enpoint that starts with "/api/" the user must present a valid JWT token. The JWTA authorizator expects an 'Authorization' header to be present in the reuest containing a valid token.
+If you want to protect access to an API resource the most simple rule is this one: for a user to access and enpoint that starts with "/api/" the user must present a valid JWT token. The Oberkorn authorizator expects an 'Authorization' header to be present in the reuest containing a valid token.
 
 ```yaml
 ruleset:

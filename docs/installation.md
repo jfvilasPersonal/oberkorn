@@ -1,5 +1,5 @@
-# JWTA installation
-Installing JWTA is very simple and straightforward.
+# Oberkorn installation
+Installing Oberkorn is very simple and straightforward.
 
 The process includes:
   - Creating Custom Resource Definitions (CRD) on your kubernetes cluster.
@@ -31,7 +31,7 @@ The controller YAML contains several kubernetes resources:
  - A *Cluster Role*. The permissions needed by the controller are defined inside a cluster role named 'jwta-controller-sa'.
  - Finally, a *Cluster Role Binding* named 'jwta-controller-crb' assigns the cluster role to the created service account.
 
-You can check whether the controller ready by examining controller stdout (the logs of the pod) and searching for the message "JWTA comntroller is watching events...".
+You can check whether the controller ready by examining controller stdout (the logs of the pod) and searching for the message "JWTA controller is watching events...".
 
 ## Next step
 Everyting is ready! Next you should check if there is any special configuration that you must perform depending on the ingress controller you are using. Continue to [Ingress configuration](/ingress-configuration).

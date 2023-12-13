@@ -1,5 +1,5 @@
 # NGINX Ingress setup
-This document will guide you thru the process of installing and configuring an NGINX Ingress controller in order to test JWTA.
+This document will guide you thru the process of installing and configuring an NGINX Ingress controller in order to test Oberkorn.
 
 Please, don't let the real life confuse you. There exist two similar projects around the words 'Nginx' and 'ingress controller':
 
@@ -11,7 +11,7 @@ This guide is for working with the **second one**.
 ## Install NGINX Ingress
 
 ## Install demo application
-Our demo application is in [one of our repositories](./demo), and it is just a tuned nginx with an index.html page that we will use for testing JWTA using different IdM (Azure B2C, AWS Cognito and Keycloak)
+Our demo application is in [one of our repositories](./demo), and it is just a tuned nginx with an index.html page that we will use for testing Oberkorn using different IdM (Azure B2C, AWS Cognito and Keycloak)
 
 Deploying our demo application is simple and straightforward, you just only need to apply a YAML to your kubernetes cluster:
 

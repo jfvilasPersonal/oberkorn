@@ -3,7 +3,7 @@ AWS Cognito is a very simple IdP with limited capabilities, but it can be succes
 
   1. Create a user pool
   2. Create a user
-  4. Gather all needed info to configure JWTA
+  4. Gather all needed info to configure Oberkorn
   5. Test your Cognito service in the demo application.
 
 ## Prerequisites
