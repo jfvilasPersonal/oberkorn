@@ -12,7 +12,7 @@ You need to modify the deployment of the ingress to enable snippets (snippets ar
 ```yaml
   args:
     - -nginx-configmaps=$(POD_NAMESPACE)/nginx-config
-    - **-enable-snippets**
+    - -enable-snippets
 ```
 
 ## Traefik
@@ -21,12 +21,12 @@ You need to add some args to the deployment of the Traefik controller for: enabl
 ```yaml
   args:
     - --api.insecure
-    - **--providers.kubernetesingress**
+    - --providers.kubernetesingress
     - --accesslog
-    - **--providers.kubernetescrd**
-    - **--providers.kubernetescrd.allowcrossnamespace**
-    - **--providers.kubernetescrd.allowemptyservices**
-    - **--providers.kubernetescrd.allowexternalnameservices**
+    - --providers.kubernetescrd
+    - --providers.kubernetescrd.allowcrossnamespace
+    - --providers.kubernetescrd.allowemptyservices
+    - --providers.kubernetescrd.allowexternalnameservices
     - --log.level=info
 ```
 
