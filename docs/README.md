@@ -10,7 +10,7 @@
 # Oberkorn
 Oberkorn is a fresh project for creating an easy way to protect web applications deployed to kubernetes clusters based on JWT authorization mechanisms. Initial version has been specifically designed to work with Kubernetes and Nginx Ingresss Controller, but we are actively adding more support regarding other Ingress integrations.
 
-The project is fully open sourced, you can access the repositories, review the code and ask for new features. You can even help us correcting and improving the code. [Any help will be welcomed](contributing)!
+The project is fully open sourced, you can access the repositories, review the code and ask for new features. You can even help us correcting and improving the code. [Any help will be welcomed](https://jfvilaspersonal.github.io/oberkorn/#/contributing)!
 
 ## Docs & Getting started
 If you need some documentation on how to install and configure Oberkorn you can visit our home page [here](https://jfvilaspersonal.github.io/oberkorn).
