@@ -81,8 +81,9 @@ Please check [our homepage](https://jfvilaspersonal.github.io/oberkorn) with all
 
 
 ## Architecture primer
-Include here a small explanation on the architecture of JWTA, and route readers to homepage.
+Here you can see the overall Oberkorn architecture.
 
+![Oberkorn architecture](https://github.com/jfvilasPersonal/oberkorn/blob/main/docs/_media/oberkorn-architecture.png)
 >image and minimal explanation
 
 ## Repository
