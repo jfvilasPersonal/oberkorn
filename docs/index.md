@@ -38,3 +38,4 @@ The flow is as follows:
 ## Architecture
 Oberkorn is build around two separate resources: **the controller** (in charge of the control plane) and **the authorizator** (repsonsible of the data plane). The architecture of the whole project is depicted below.
 
+![Oberkorn architecture](/_media/oberkorn-architecture.png)
