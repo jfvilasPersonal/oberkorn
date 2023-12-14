@@ -89,8 +89,8 @@ What you see is:
   1. Oberkorn images are stored in Docker Hub.
   2. The control plane is managed by a controller (JWTA Controller)
   3. The controller is responsible of:
-     1. Listen for resoure events (ADD, DELETE, MODIFY) on JWT authorizators.
-     2. Deploys a service and n replicas of authorizator, the component responsible of the data plane.
+     1. Listen for resource events (ADD, DELETE, MODIFY) on JWT authorizators.
+     2. Deploys a service and N replicas of authorizator, the component in charge of the data plane.
      3. Configures Ingress to make it point to an authorizator.
   4. When user requests arrive at ingress (whatever flavour it be), the requests are sent to the JWT Authorizator, who grants or rejects the requests.
   
