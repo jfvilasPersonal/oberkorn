@@ -7,35 +7,37 @@ The new features added to the project will probably evolve following two differe
 We plan to add this features in the next months.
 
   - Rule processing improvements
-      1. Add behaviour capabilities: 'ontrue' and 'onfalse' with actions: accept, reject, continue. Behaviour will include these default values: 'onfalse: continue' and 'ontrue: accept'
+      1. Complete behaviour capabilities: 'ontrue' and 'onfalse' with actions: accept, reject, continue. Behaviour will include these default values: 'onfalse: continue' and 'ontrue: accept'
       2. Decide whether to add rule priority to rules in a ruleset.
-      3. Add capture groups to URI regexes and conditions on the value of the groups.
+      3. Add capture groups to URI regexes and conditions on the value of the groups, so rules can contan references to parts of the URIs.
 
-  - New validators:
+  - Add more validators:
       1. Google validator.
       2. Github validator.
       3. Facebook validator.
-      4. Custom validator.
+      4. Custom validator. Ability to include external JS or TS code that can be injected in the authorizator as a plugin.
 
   - Token invalidation:
-      1. Invalidate token regading claim values.
-      2. Invalidate token for a especifica user (subject).
+      1. Invalidate token according to claim values.
+      2. Invalidate token for a specific user (subject).
 
-  - Refresh cached signing keys schedulable.
+  - JWKS keys management
+      1. Refresh cached signing keys schedulable.
+      2. Use different available keys when validating tokens.
 
   - Tracing:
       1. Monitor and trace a specific user (i.e., token).
       
   - Monitoring
       1. Performance monitoring, we need to add some additional metrics.
-      2. Integrte with Grafana.
+      2. Integrate with Grafana.
 
 ### Controller features
-We plan to imprive controller with:
+We plan to improve controller with:
 
   - License validation.
   - Optimize authorizator modification.
-  - Optimiza container escalation.
+  - Optimize container escalation.
 
 
 ## Need more?

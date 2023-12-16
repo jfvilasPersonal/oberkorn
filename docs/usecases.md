@@ -44,13 +44,13 @@ ruleset:
 In this case, if a valid token is not presented by the user (via 'Authorization' HTTP header) the request is rejected. But, if a valid token is present, the rule engine will continue processing the rest of the rules in the ruleset.
 
 ## API protection
-If you want to protect access to an API resource the most simple rule is this one: for a user to access and enpoint that starts with "/api/" the user must present a valid JWT token. The Oberkorn authorizator expects an 'Authorization' header to be present in the reuest containing a valid token.
+If you want to protect access to an API resource the most simple rule is this one: for a user to access and enpoint that starts with "/api/" the user must present a valid JWT token. The Oberkorn authorizator expects an 'Authorization' header to be present in the request containing a valid token.
 
 ```yaml
 ruleset:
   - uri: "/api/"
     uritype: prefix
-    type: claim
+    type: valid
 ```
 
 Let's do it a bit more complex. We want now to protect access to two different API paths. A user with a valid token can access several API's, but if the user wants to access '/api/admin' or '/api/config' then the token must include a specific claim named 'PROFILE' and the claim must have the value 'ADMIN'. This would be the ruleset for this situation:
@@ -82,7 +82,7 @@ This is a very typical use when exposing API's. Context: we have a an aplication
   - /api/admin, only admin users can access this endpoint.
 
 To implement this scenario we have two options (at least):
-  1. We create a USER_PROFILE claim containing the specifica profile of the user (in fact, the type of user). For example: USER_PROFILE="OPERATOR" or USER_PROFILE="ADMIN"
+  1. We create a USER_PROFILE claim containing the specific profile of the user (in fact, the type of user). For example: USER_PROFILE="OPERATOR" or USER_PROFILE="ADMIN"
   2. We create a USER_ROLES claim containing a list of roles. For example, USER_ROLES="OPERATOR", or USER_ROLES="ADMIN" or even USER_ROLES="OPERATOR ADMIN"
 
 
@@ -138,7 +138,7 @@ That is, assigning two possible values to the claim in the case of '/api/operato
 
 **Solution for use case 2**
 
-In case B the idea is to assign roles to users, so one possible solution would be:
+In case 2 the idea is to assign roles to users, so one possible solution would be:
 
 ```yaml
 ruleset:

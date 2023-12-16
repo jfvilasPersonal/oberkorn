@@ -266,7 +266,25 @@ If you do not specify lowercaso or uppercase, the comparisons will be performed 
 
 
 ##### subset [optional] [string] 
-> Explain how to use rule subsets.
+A subset is a set of rules contained inside a rule (like a ruleset, but specific to a rule). Subsets are only used when the **type** of a rule is 'and' or 'or'. As explainied before...
+
+  - If the rule type is 'and' all the rules in the subset must evaluate to true in order to return a positive response to the ingress. When a rule in the subset evaluates to false, the evaluation of the subset is inmediatly stopped and rule evaluation is set to 'false'.
+  - If the rule type is 'or' at least one rule in the subset must evaluate to true in order to return a positive response to the ingress. When a rule in the subset evaluates to true, the evaluation of the subset is inmediatly stopped and rule evaluation is set to 'true'.
+
+For instance, following rule ('and' type) will be evaluatoed to true if the token presented by the requestor contains a claim named 'USERTYPE' and **do** **not** contain a claim named 'BANNED'.
+
+```yaml
+    - uri: "/a-rule"
+      uritype: "exact"    
+      type: "and"
+      subset:
+        - type: "claim"
+          name: "USERTYPE"
+          policy: "present"
+        - type: "claim"
+          name: "BANNED"
+          policy: "notpresent"
+```
 
 #### Behaviours: ontrue & onfalse
 A behaviour is a specification on how the rule engine must manage the result of the evaluation of a rule. A behaviour can be specified positively or negatively, that is, you can indicate what to do when a positive evaluation (true) is received, and what to do when receiving a negative evaluation (false).
