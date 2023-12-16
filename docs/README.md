@@ -43,7 +43,7 @@ The controller YAML contains several kubernetes resources:
 You can check whether the controller is ready by examining controller stdout (the logs of the pod) and searching for the message "JWTA controller is watching events...".
 
 ### Your first authorizator
-Once the setup is completed (and the controller has fully started) you can create your first JWTA authorizator. Next you can find a simple authorizator code to protect access to a typical SPA (Angular, React...) application served from "/" (your root URI) and accesing REST APIs published under "/api". In this example the access to the web application is protected using JWT tokens emitted by an AWS Cognito service. In addition, your web application must be accesible from outside kubernetes cluster through an Nginx Ingress Controller (named 'sample-nginx-ingress' in namespace 'test' in this example).
+Once the setup is completed (and the controller has fully started) you can create your first Oberkorn authorizator. Next you can find a simple authorizator code to protect access to a typical SPA (Angular, React...) application served from "/" (your root URI) and accesing REST APIs published under "/api". In this example the access to the web application is protected using JWT tokens emitted by an AWS Cognito service. In addition, your web application must be accesible from outside kubernetes cluster through an Nginx Ingress Controller (named 'sample-nginx-ingress' in namespace 'test' in this example).
 
 ```yaml
 apiVersion: jfvilas.at.outlook.com/v1

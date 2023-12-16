@@ -5,7 +5,7 @@ The process includes:
   - Creating Custom Resource Definitions (CRD) on your kubernetes cluster.
   - Deploying the JWTA Controller.
 
-Once everything is ok, you can start deploying JWTA authorizators to protect your applications.
+Once everything is ok, you can start deploying Oberkorn authorizators to protect your applications.
 
 ## Setup
 Step 1. Create the CRD.
