@@ -29,7 +29,7 @@ spec:
       type: "unrestricted"
 ```
 
-Let's explain the content. As any usual kubernetes resource, you must specify the 'apiVersion' and the 'kind' of the object you are defining. In this case, we are creating a JWT Authorizator, so the kind is 'ObkAuthorizator'.
+Let's explain the content. As any usual kubernetes resource, you must specify the 'apiVersion' and the 'kind' of the object you are defining. In this case, we are creating an Oberkorn Authorizator, so the kind is 'ObkAuthorizator'.
 
 The 'metadata' section works as usual, you must define the name of the authorizator you are creating and the 'namespace' it belongs to.
 
@@ -214,7 +214,7 @@ Every rule has a type, which defines how the rule will be evaluated. These are t
 When rule type is set to unrestricted there will be no evaluation, the result of evaluating an 'unrestricted' rule will always be positive ('true'), no matter the token, no matter the request context.
 
 ###### *valid*
-The 'valid' rule type will evaluate to true if a token (JWT o rany other type) is present (in the Authorization header) and the token is valid (it is not expired nor has been manipulated).
+The 'valid' rule type will evaluate to true if a token (JWT or any other type) is present (in the Authorization header) and the token is valid (it is not expired nor has been manipulated).
 
 ###### *claim*
 A 'claim' rule will evaluate to 'true' if a specific claim in the token satisfies the policy specified in the rule (see 'policy' downwards).

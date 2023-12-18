@@ -18,12 +18,12 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/cont
 We install version 1.9.4 from source repositories.
 
 ## Install demo application
-Our demo application is in [one of our repositories](https://github.com/jfvilasPersonal/jwta-demo), and it is just a tuned nginx with an index.html page that we will use for testing Oberkorn using different IdM (Azure B2C, AWS Cognito and Keycloak)
+Our demo application is in [one of our repositories](https://github.com/jfvilasPersonal/obk-demo), and it is just a tuned nginx with an index.html page that we will use for testing Oberkorn using different IdM (Azure B2C, AWS Cognito and Keycloak)
 
 Deploying our demo application is simple, you just only need to apply a YAML to your kubernetes cluster:
 
 ```yaml
-kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/jwta-demo/main/demo-nginx.yaml
+kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/obk-demo/main/demo-nginx.yaml
 ```
 
 This creates a deployment and a service for accessing the application inside the pod. Once installed you should be able to reach it on port 81 (the service in the YAML publishes port 80 and redirects users to port 80 served by nginx demo application)
@@ -34,7 +34,7 @@ Once the demo application and the ingress controller are installed and running, 
 Just apply this YAML to create an ingress that  points to our demo application:
 
 ```yaml
-kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/jwta-controller/main/test/ingress-jfvilas.yaml
+kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/obk-controller/main/test/ingress-jfvilas.yaml
 ```
 
 ## Test

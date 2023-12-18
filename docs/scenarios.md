@@ -1,4 +1,4 @@
-# JWT Authorizator usage scenarios
+# Oberkorn Authorizator usage scenarios
 In this section you will find different typical scenarios where Oberkorn can be used. Please review them and check if any of them matches your needs.
 
 If you have a scenario that is not covered here, please contact us in order to review it and help you on configuring Oberkorn to protect the applications under your scenario.
@@ -40,7 +40,7 @@ spec:
       type: "unrestricted"
 ```
 
-As you have guessed, every resource whose path starts with "/admin/..." needs a valid JWT emited by our Cognito service to be accessed, and every resource under "/public/..." can be accessed freely. All other resource paths cannot be accessed.
+As you have guessed, every resource whose path starts with "/admin/..." needs a valid JWT token emited by our Cognito service to be accessed, and every resource under "/public/..." can be accessed freely. All other resource paths cannot be accessed.
 
 
 ## SPA scenario
