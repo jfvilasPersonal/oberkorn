@@ -1,9 +1,9 @@
 # Ingress configuration
-Installing Oberkorn is very easy., but maybe you need some help on configuring your Ingress. Following you will find some special actions you must perform on the different types of ingresses that Oberkorn supports in order to make them work with external auth.
+Installing Oberkorn is very easy, but maybe you need some help on configuring your Ingress. Following you will find some special actions you must perform on the different types of ingresses that Oberkorn supports in order to make them work with an external authorizator.
 
 
 ## Ingress Nginx
-TBD
+WIP
 
 
 ## NGINX Ingress
@@ -16,7 +16,9 @@ You need to modify the deployment of the ingress to enable snippets (snippets ar
 ```
 
 ## Traefik
-You need to add some args to the deployment of the Traefik controller for: enable CRD's and enable ingress
+You need to add some args to the deployment of the Traefik controller for:
+  - enable CRD's
+  - enable Traefik ingress
 
 ```yaml
   args:
@@ -30,10 +32,11 @@ You need to add some args to the deployment of the Traefik controller for: enabl
     - --log.level=info
 ```
 
-In addition you need to add some permisions to the cluster role. Following you can find a YAML for modifying the cluster role.
+In addition you need to add some permissions to the cluster role. Following you can find a YAML for modifying the cluster role.
 
 ```yaml
-ClusterRole
+apiVersion: v1
+kind: ClusterRole
 metadata:
   name: traefik-role
   - apiGroups:
@@ -56,5 +59,4 @@ metadata:
 ```
 
 ## Next step
-Everyting is ready! Now you can create your first authorizator. Continue to a [basic JWT Authorizator deployment](/scenarios?id=basic-scenario-a-static-html-application).
-
+Everyting is ready! Now you can create your first authorizator. Continue to a [basic Oberkorn authorizator deployment](/scenarios?id=basic-scenario-a-static-html-application).

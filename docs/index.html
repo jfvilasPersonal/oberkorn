@@ -27,25 +27,20 @@
       name: 'JWT Authorizator',
       homepage:'index.md',
       subMaxLevel: 2,
-      search: [
-      '/',            // => /README.md
-      '/guide',       // => /guide.md
-      '/get-started', // => /get-started.md
-      '/zh-cn/',      // => /zh-cn/README.md
-    ],
+      // search: [
+      // '/'            // => /README.md
+      // ],
+      search: {
+          maxAge: 86400000, // Expiration time, the default one day
+          paths: 'auto',
+          placeholder: 'Search...',
 
-    // complete configuration parameters
-    search: {
-        maxAge: 86400000, // Expiration time, the default one day
-        paths: 'auto',
-        placeholder: 'Search...',
+          noData: 'No Results!',
 
-        noData: 'No Results!',
+          // Headline depth, 1 - 6
+          depth: 6,
 
-        // Headline depth, 1 - 6
-        depth: 6,
-
-        hideOtherSidebarContent: false // whether or not to hide other sidebar content
+          hideOtherSidebarContent: false // whether or not to hide other sidebar content
       }
     }
   </script>

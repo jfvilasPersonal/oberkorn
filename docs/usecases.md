@@ -1,4 +1,4 @@
-# JWT Authorizator use cases
+# Oberkorn authorizator use cases
 In this section you will find different typical use cases. These are not complete scenarios, what we include here are specific solutions to typical authorization needs.
 
 If you have an use case that is not covered here, please contact us in order to review it and help you on how to configure Oberkorn to cover your use case.
