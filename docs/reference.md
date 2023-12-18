@@ -6,7 +6,7 @@ To create an Oberkorn authorizator you must create a YAML file containing all th
 
 ```yaml
 apiVersion: jfvilas.at.outlook.com/v1
-kind: JwtAuthorizator
+kind: ObkAuthorizator
 metadata:
   name: sample-authorizator
   namespace: test
@@ -29,7 +29,7 @@ spec:
       type: "unrestricted"
 ```
 
-Let's explain the content. As any usual kubernetes resource, you must specify the 'apiVersion' and the 'kind' of the object you are defining. In this case, we are creating a JWT Authorizator, so the kind is 'JwtAuthorizator'.
+Let's explain the content. As any usual kubernetes resource, you must specify the 'apiVersion' and the 'kind' of the object you are defining. In this case, we are creating a JWT Authorizator, so the kind is 'ObkAuthorizator'.
 
 The 'metadata' section works as usual, you must define the name of the authorizator you are creating and the 'namespace' it belongs to.
 

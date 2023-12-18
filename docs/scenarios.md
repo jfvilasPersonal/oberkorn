@@ -14,7 +14,7 @@ For this application to be protected using Oberkorn we should create an Oberkorn
 
 ```yaml
 apiVersion: jfvilas.at.outlook.com/v1
-kind: JwtAuthorizator
+kind: ObkAuthorizator
 metadata:
   name: spa-authorizator
   namespace: test
@@ -59,7 +59,7 @@ For this application to be protected using Oberkorn we should create a Oberkorn 
 
 ```yaml
 apiVersion: jfvilas.at.outlook.com/v1
-kind: JwtAuthorizator
+kind: ObkAuthorizator
 metadata:
   name: spa-authorizator
   namespace: test
@@ -109,7 +109,7 @@ In order to build a protection layer based on Oberkorn we should deploy an Oberk
 
 ```yaml
 apiVersion: jfvilas.at.outlook.com/v1
-kind: JwtAuthorizator
+kind: ObkAuthorizator
 metadata:
   name: asp-authorizator
   namespace: test
@@ -156,7 +156,7 @@ Suppose you want to have public access for recent content and protect access to 
 
 ```yaml
 apiVersion: jfvilas.at.outlook.com/v1
-kind: JwtAuthorizator
+kind: ObkAuthorizator
 metadata:
   name: spa-authorizator
   namespace: test

@@ -47,7 +47,7 @@ Once the setup is completed (and the controller is fully started) you can create
 
 ```yaml
 apiVersion: jfvilas.at.outlook.com/v1
-kind: JwtAuthorizator
+kind: ObkAuthorizator
 metadata:
   name: sample-spa-web-authorizator
   namespace: test

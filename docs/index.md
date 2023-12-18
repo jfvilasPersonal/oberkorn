@@ -7,7 +7,7 @@ The project is fully open sourced, you can access the repositories [here](https:
 The project is made up of 2 components:
 
   1. **Controller**. This is the control plane of the authorizator. The controller is in charge of receiving your commands and creating, updating or removing Oberkorn authorizators that you configure for protecting your applications.
-  2. **Authorizator**. In order to protect one or more applications you must deploy an Oberkorn authorizator (kind: 'JwtAuthorizator'), which will receive authorization requests from the ingress and will respond accordingly following a set of preconfigured rules (a ruleset).
+  2. **Authorizator**. In order to protect one or more applications you must deploy an Oberkorn authorizator (kind: 'ObkAuthorizator'), which will receive authorization requests from the ingress and will respond accordingly following a set of preconfigured rules (a ruleset).
 
 Typical use case for authorizators is implementing JWT validation, i.e., validating JWT tokens and check authorization behaviour of your applications.
 
@@ -20,7 +20,7 @@ This is how the control plane works:
 The flow is as follows:
   1. You create a YAML containing the specs of an Oberkorn authorizator (See the rest of the documentation on how to build a YAML for this).
   2. You apply the YAML to create the authorizator: 'kubectl apply -f your-authorizator-code.yaml'.
-  3. The controller, which is listening for 'JwtAuthorizator' events receives an 'ADDED' event, so the controller creates all the resources needed to deploy an authorizator (a pod, a service, and, optionally, it configures your ingress to point its authorization needs to the newly created JwtAuthorizator).
+  3. The controller, which is listening for 'ObkAuthorizator' events receives an 'ADDED' event, so the controller creates all the resources needed to deploy an authorizator (a pod, a service, and, optionally, it configures your ingress to point its authorization needs to the newly created ObkAuthorizator).
   4. You can make changes to your auhtorizator (like changing scale process, modifying the ruleset...), so when you apply a new YAML the controller receives a 'MODIFIED' event and it performs requested changes.
   5. When you no longer need your authorizator, you can 'kubectl delete' it, so the controller will receive a 'DELETED' event and it will deprovision all previously provisioned resources (and optional configuration).
 
