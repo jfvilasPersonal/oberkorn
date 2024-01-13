@@ -20,7 +20,7 @@ What follows is a simple installation and starting guide.
 ### Installation
 **Step 1**. Create the CRD.
 
-```yaml
+```sh
 kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/obk-controller/main/crd/crd.yaml
 ```
 
@@ -29,7 +29,7 @@ This will create a CRD which you will use to create your ahtorizators.
 **Step 2**. Deploy the controller.
 The controller is the software component in charge of managing your authorizators. It listens for kubernetes events like ADD, DELETE o MODIFY anytime you create, remove or modify one authorizator. To deploy the controller you just need to apply following YAML.
 
-```yaml
+```sh
 kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/obk-controller/main/crd/controller.yaml
 ```
 

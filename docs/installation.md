@@ -11,7 +11,7 @@ Once everything is ok, you can start deploying Oberkorn authorizators to protect
 **Step 1**. Create the CRD.
 You can download and review the CRD or you can just apply it to your cluster. **Applying a CRD is not harmful**.
 
-```yaml
+```sh
 kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/obk-controller/main/crd/crd.yaml
 ```
 
@@ -20,7 +20,7 @@ This will create a CRD which you will use to create your authorizators.
 **Step 2**. Deploy the controller.
 The controller is the software component in charge of managing your authorizators. It listens for kubernetes events like ADD, DELETE o MODIFY anytime you create, remove or modify one authorizator. To deploy the controller you just need to apply a YAML that contains several definitions.
 
-```yaml
+```sh
 kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/obk-controller/main/crd/controller.yaml
 ```
 

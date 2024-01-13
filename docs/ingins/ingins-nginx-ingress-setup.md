@@ -61,7 +61,7 @@ Our demo application is in [one of our repositories](./demo), and it is just a t
 
 Deploying our demo application is simple and straightforward, you just only need to apply a YAML to your kubernetes cluster:
 
-```yaml
+```sh
 kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/obk-demo/main/demo-nginx.yaml
 ```
 

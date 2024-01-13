@@ -11,7 +11,7 @@ This guide is for working with the **first one**.
 ## Install Ingress Nginx
 Let's create a lot of resources:
 
-```yaml
+```sh
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.9.4/deploy/static/provider/cloud/deploy.yaml
 ```
 
@@ -22,7 +22,7 @@ Our demo application is in [one of our repositories](https://github.com/jfvilasP
 
 Deploying our demo application is simple, you just only need to apply a YAML to your kubernetes cluster:
 
-```yaml
+```sh
 kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/obk-demo/main/demo-nginx.yaml
 ```
 
@@ -33,7 +33,7 @@ Once the demo application and the ingress controller are installed and running, 
 
 Just apply this YAML to create an ingress that  points to our demo application:
 
-```yaml
+```sh
 kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/obk-controller/main/test/ingress-jfvilas.yaml
 ```
 
