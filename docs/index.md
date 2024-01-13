@@ -6,10 +6,10 @@ The project is fully open sourced, you can access the repositories [here](https:
 ## Operation
 The project is made up of 2 components:
 
-  1. **Controller**. This is the control plane of the authorizator. The controller is in charge of receiving your commands and creating, updating or removing Oberkorn authorizators that you configure for protecting your applications.
+  1. **Controller**. This is the control plane of the Oberkorn project. The controller is in charge of receiving your commands and creating, updating or removing Oberkorn authorizators that you configure for protecting your applications. It's just a typical Kubernetes controller.
   2. **Authorizator**. In order to protect one or more applications you must deploy an Oberkorn authorizator (kind: 'ObkAuthorizator'), which will receive authorization requests from the ingress and will respond accordingly following a set of preconfigured rules (a ruleset).
 
-Typical use case for authorizators is implementing JWT validation, i.e., validating JWT tokens and check authorization behaviour of your applications.
+Typical use case for authorizators is implementing JWT validation, i.e., validating JWT tokens and check authorization behaviour of your applications. But you can use some other types of authentication and authorization mechanisms.
 
 ### Control plane
 This is how the control plane works:
