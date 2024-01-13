@@ -83,7 +83,7 @@ Please check [our homepage](https://jfvilaspersonal.github.io/oberkorn) with all
 ## Architecture primer
 Here you can see the overall Oberkorn architecture.
 
-![Oberkorn architecture](https://github.com/jfvilasPersonal/oberkorn/blob/main/docs/_media/oberkorn-architecture.png)
+![Oberkorn architecture](https://github.com/jfvilasPersonal/oberkorn/blob/main/docs/_media/architecture/oberkorn-architecture.png)
 
 What you see is:
   1. Oberkorn images are stored and publiclly accessible in Docker Hub.
