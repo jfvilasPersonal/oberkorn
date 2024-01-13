@@ -4,7 +4,7 @@ This document will guide you thru the process of installing and configuring a Tr
 ## Install Traefik
 Installing traefik is real simple. The only issue you can find is to have a clear documentation for a simple kubernetes deploymment. This guide includes all the steps for deploying Traefik v2.10 for testing Oberkorn.
 
-### Step 1. the basics
+### Step 1, the basics
 Create Namespace, ClusterRole and Service Account
 
 ```yaml
@@ -27,7 +27,7 @@ Our demo application is in [one of our repositories](./demo), and it is just a t
 Deploying our demo application is simple and straightforward, you just only need to apply a YAML to your kubernetes cluster:
 
 ```yaml
-kubectl apply -f enlace-al-yaml
+kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/obk-demo/main/demo-nginx.yaml
 ```
 
 Once installed you should be able to reach it on port 81 (the service in the YAML publishes port 80 and redirects users to por 80 served by nginx demo application)
