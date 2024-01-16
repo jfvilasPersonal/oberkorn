@@ -319,10 +319,11 @@ That means, if a rule evaluates to true the access is granted. If a rule evaluat
 Oberkorn (including controller and authorizator modules) has been succesfully tested under the following conditions:
 
 **Kubernetes**
+
 | Distribution | Version | Notes|
 |-|-|-|
-| K3s | v1.27.4-k3s1 ||
-| Azure Kubernetes Service (AKS) | 1.27.7 <br/> 1.26.6 ||
+| K3s | v1.27.4-k3s1 | |
+| Azure Kubernetes Service (AKS) | 1.27.7 <br/> 1.26.6 | |
 
 **Ingress**
 
