@@ -98,6 +98,9 @@ Each validator has its own type, and thus its own specific paramters to configur
 
 All validators include, aside from its specific configuration parameters, this 3 properties:
 
+##### name [mandatory] [string]
+The name of the validator, that you will use later to link a specific rule to a validator. Please note that the name must be unique, but you can create different validators of the same type.
+
 ##### iss [optional] [string]
 You can define a validator just defining its name, its tenant and its userflow (for instance). Later, when creating the rules, you can add conditions to the tokens emitted by a specific validator. Anyway, if you want to enforce a specific 'issuer' for the JWT tokens you plan to use, you can specify here a issuer value in such a way that every token to be validated against this validator must have an 'iss' value that matches the one specified here.
 
@@ -115,9 +118,6 @@ This is the default behaviour, but, when working with corporate applications tha
 ### Azure B2C
 These are the properties that define an Azure B2C validator.
 
-##### name [mandatory] [string]
-The name of the validator, that you will use later to link a specific rule to a validator. Please note that the name must be unique, but you can create different validators of the same type.
-
 ##### tenant [mandatory] [string]
 The tentant name of your Azure B2C service.
 
@@ -126,9 +126,6 @@ The name of the user flow to use.
 
 ### AWS Cognito
 These are the properties that define an AWS Cognito validator.
-
-##### name [mandatory] [string]
-The name of the validator, that you will use later to link a specific rule to a validator. Please note that the name must be unique, but you can create different validators of the same type.
 
 ##### region [mandatory] [string]
 The region where your AWS Cognito service has been deployed, something like "eu-west-1" or "us-east-2".
@@ -140,18 +137,12 @@ The name of the userpool of your AWS Cognito service, something like "eu-west-1_
 ### Azure AD
 These are the properties that define an Azure AD validator.
 
-##### name [mandatory] [string]
-The name of the validator, that you will use later to link a specific rule to a validator. Please note that the name must be unique, but you can create different validators of the same type.
-
 ##### tenant [mandatory] [string]
 The name of the tentant of your Entra ID service.
 
 
 ### Keycloak
 These are the properties that define a KeyCloak validator.
-
-##### name [mandatory] [string]
-The name of the validator, that you will use later to link a specific rule to a validator. Please note that the name must be unique, but you can create different validators of the same type.
 
 ##### url [mandatory] [string]
 The base URL where the KeyCloak cab be accessed. Typucally it would conntain a vlaue like "https://my.keycloak.deployment.com", but, if the KeyCloak you want to use has been deloyed the tha same Kubernetes cluster where Oberkorn runs, then you should use internal DNS name, like "http://keycloak.dev.svc.cluster.local:8080", for example, using standard DNS names inside Kubernetes (service name, namespace and the "cluster.local" TLD).
