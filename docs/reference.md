@@ -88,11 +88,12 @@ ingress:
 ## **validators**
 The 'validators' section contains a set of validators of different types that you will use for protecting your applications.
 
-Each validator has its own type, and thus its own specific paramters to configure it. In current version of Oberkorn following validators are supported:
+Each validator has its own type, and thus its own specific paramters to configure it. Current version of Oberkorn supports following validators:
 
   - Azure B2C
   - AWS Cognito
   - Azure AD (Entra ID)
+  - KeyCloak
   - Custom
 
 All validators include, aside from its specific configuration parameters, this 3 properties:
@@ -146,30 +147,27 @@ The name of the validator, that you will use later to link a specific rule to a 
 The name of the tentant of your Entra ID service.
 
 
+### Keycloak
+These are the properties that define a KeyCloak validator.
+
+##### name [mandatory] [string]
+The name of the validator, that you will use later to link a specific rule to a validator. Please note that the name must be unique, but you can create different validators of the same type.
+
+##### realm [mandatory] [string]
+The tentant name of your KeyCloak server.
+
+
 ### Examples
-Following you can find a sample 'validators' section including three validators, two of them are based on the same Azure B2C service and the third one is based on AWS Cognito. Please note that both Azure B2C validators are based on the same Azure B2C tenant, but they have different name and different configuration.
+Following you can find a sample 'validators' section including two validators. First one nly checks that a token is present, and the second onw validates de token and the audience.
 ```yaml
 validators:
-  - azure-b2c:
-      name: b2c-customer-spain
-      tenant: company-one
-      userflow: B2C_1_ropc
-      aud: b8a34569-512f-4667-a3e0-6e436545686d
-      iss: https://company-one.b2clogin.com/2c5867ea-945a-4234-a012-7938475643d8/v2.0/
-      verify: true
-  - azure-b2c:
-      name: b2c-corporate-spain
-      tenant: company-one
-      userflow: B2C_1_ropc
-      aud: 28374653-512f-4787-a230-69988456786d
-      iss: https://company-one.b2clogin.com/2c44444ea-9223-4224-a124-7abebc443d7/v2.0/
+  - keycloak:
+      name: coporate-kc
+      realm: company-one
       verify: false
-  - cognito:
+  - keycloak:
       name: external-users
-      region: us-east-1
-      userpool: us-east-1_ueury5Olp
       aud: aa1be673-598c-4712-a211-69abcde6786d
-      iss: https://cognito-idp.us-east-1.amazonaws.com/us-east-1_ueury5Olp
       verify: true
 ```
 
@@ -333,3 +331,9 @@ Oberkorn (including controller and authorizator modules) has been succesfully te
 | NGINX Ingress | 3.3.2 <br/> 3.3.1 ||
 | HA Proxy Ingress | TBT ||
 | Traefik Ingress | 2.10.7 ||
+
+**IdM**
+
+| Identity Manager | Version | Notes |
+|-|-|-|
+| KeyCloak | 24.0.2 ||
