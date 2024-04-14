@@ -5,5 +5,5 @@
 * [Use cases](usecases.md)
 * [Scenarios](scenarios.md)
 * [Roadmap](roadmap.md)
-* [Reference](reference.md)
 * [IdM configuration](idm-configuration.md)
+* [Reference](reference.md)
