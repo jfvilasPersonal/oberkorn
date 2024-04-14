@@ -153,8 +153,11 @@ These are the properties that define a KeyCloak validator.
 ##### name [mandatory] [string]
 The name of the validator, that you will use later to link a specific rule to a validator. Please note that the name must be unique, but you can create different validators of the same type.
 
+##### url [mandatory] [string]
+The base URL where the KeyCloak cab be accessed. Typucally it would conntain a vlaue like "https://my.keycloak.deployment.com", but, if the KeyCloak you want to use has been deloyed the tha same Kubernetes cluster where Oberkorn runs, then you should use internal DNS name, like "http://keycloak.dev.svc.cluster.local:8080", for example, using standard DNS names inside Kubernetes (service name, namespace and the "cluster.local" TLD).
+
 ##### realm [mandatory] [string]
-The tentant name of your KeyCloak server.
+The name of the realm you want to use.
 
 
 ### Examples
@@ -164,9 +167,11 @@ validators:
   - keycloak:
       name: coporate-kc
       realm: company-one
+      url: http://keycloak.dev.svc.cluster.local
       verify: false
   - keycloak:
-      name: external-users
+      name: external-keycloak
+      url: https://sample.keycloak.server
       aud: aa1be673-598c-4712-a211-69abcde6786d
       verify: true
 ```

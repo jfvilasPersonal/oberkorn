@@ -6,3 +6,4 @@
 * [Scenarios](scenarios.md)
 * [Roadmap](roadmap.md)
 * [Reference](reference.md)
+* [IdM configuration](idm-configuration.md)
