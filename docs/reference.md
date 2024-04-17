@@ -94,6 +94,7 @@ Each validator has its own type, and thus its own specific paramters to configur
   - AWS Cognito
   - Azure AD (Entra ID)
   - KeyCloak
+  - Basic Auth (classical web authentication)
   - Custom
 
 All validators include, aside from its specific configuration parameters, this 3 properties:
@@ -150,8 +151,7 @@ The base URL where the KeyCloak cab be accessed. Typucally it would conntain a v
 ##### realm [mandatory] [string]
 The name of the realm you want to use.
 
-
-### Examples
+#### Examples
 Following you can find a sample 'validators' section including two validators. First one nly checks that a token is present, and the second onw validates de token and the audience.
 ```yaml
 validators:
@@ -166,6 +166,40 @@ validators:
       aud: aa1be673-598c-4712-a211-69abcde6786d
       verify: true
 ```
+
+### Basic Auth List
+These are the properties that define a Basic Auth List validator. The Basic Authentication works like classical web authentication:
+
+  1. The user tries to access a resource, an URL.
+  2. The browser doesn't send any kind of authentication info.
+  3. The server answers the browser by sending a 401 and adding a 'WWW-Authenticate' header.
+  4. The user enters its credentilas (user and password).
+  5. The browser re-sends the original request adding an Authorization header.
+
+This validator uses a static list of users and passwords. See other Basic Auth validators for being able to use more useful alternatives.
+
+
+##### realm [mandatory] [string]
+The name of the realm you want to use.
+
+##### users [array]
+You must add here an array of users and passwords (See sample for correct syntax).
+
+#### Examples
+Following you can find a sample Basic Auth validator of type "List", that is, a static list of users (and their passwords).
+
+```yaml
+  validators:
+    - basic-auth-list:
+        name: testBasicAuth
+        realm: test-realm
+        users: 
+          - name: u1
+            password: p1
+          - name: u2
+            password: p2
+```
+
 
 ## **ruleset**
 This is where you can define what rules will drive the security of your application. As the name states, the content of this section is a rule set (an array of rules, in fact).
