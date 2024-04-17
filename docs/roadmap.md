@@ -8,6 +8,7 @@ We plan to add this features in the next months.
 
   - Rule processing improvements
       1. ~~Complete behaviour capabilities: 'ontrue' and 'onfalse' with actions: accept, reject, continue. Behaviour will include these default values: 'onfalse: continue' and 'ontrue: accept'~~ **DONE**
+      1. Add annotation to ingresses to send headers back to browsers for Basic Auth validators.
       2. Decide whether to add rule priority to rules in a ruleset (and implement it!!).
       3. Add capture groups to URI regexes and conditions on the value of the groups, so rules can contan references to those capture groups of the URIs.
 
