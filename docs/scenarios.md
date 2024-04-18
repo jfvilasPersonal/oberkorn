@@ -202,3 +202,43 @@ Another way to configure protection for WordPress applications is to use custom 
 In the case of using custom permalinks, the protection mechanism is the same of a static HTML web application.
 
 (Thanks to [WordPress Beginner](https://www.wpbeginner.com/wp-tutorials/seo-friendly-url-structure-for-wordpress))
+
+
+## Classic Web authentication
+Maybe you don't need something as conmplex as an IdM (Identity Manager), IdP (Identity Provider) and owrking with weird stuff lile OAtuh, JSON Web tokens, cypher, etc...
+Maybe you just need to protect a web resource (a static HTML web application, for example) by using classic web authentication mechanisms. If this is your case, Basic Authentication is what you are looking for.
+
+Oberkorn provides a special type of Validator (not OAuth-oriented) qich can help you protecting web resources using [Basic Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication), that is, the one in which the browser asks the user for its credentials.
+
+Suppose yo have a simple web application whose root path is "/home", and other stuff served on other URL paths that do not need to be protected. In order to build a protection layer based on Oberkorn we should deploy an Oberkorn authorizator like this one:
+
+```yaml
+apiVersion: jfvilas.at.outlook.com/v1
+kind: ObkAuthorizator
+metadata:
+  name: basic-authentication-test
+  namespace: test
+spec:
+  ingress:
+    name: my-ingress
+    provider: ingress-nginx
+    class: nginx
+  validators:
+    - basic-auth-list:
+        name: testBasicAuth
+        realm: "Access to home site"
+        users: 
+          - name: u1
+            password: p1
+          - name: u2
+            password: p2
+  ruleset:
+    # if requested uri starts with /home/ user must authenticate 
+    - uri: "/home/"
+      uritype: "prefix"
+      validators:
+        - testBasicAuth
+```
+*Easy* and **classic**, isn't it?
+
+Please, take into account that the user list (and the passwords) are in fact a **static list**, this way of protecting resources has several specific use cases, like and administrator website, an operation website or simple applications like those. And, as you have guessed, users cannot change passwords.
