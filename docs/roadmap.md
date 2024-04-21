@@ -13,10 +13,10 @@ We plan to add this features in the next months.
       3. Add capture groups to URI regexes and conditions on the value of the groups, so rules can contan references to those capture groups of the URIs.
 
   - Add more validators:
-      1. Google validator.
+      1. ~~Google validator.~~
       2. Github validator.
       3. Facebook validator.
-      4. Custom validator. Ability to include external JS or TS code that can be injected in the authorizator as a plugin.
+      4. ~~Custom validator. Ability to include external JS or TS code that can be injected in the authorizator as a plugin.~~
       5. External validator. Ability to invoke an external validator (via HTTP/HTTPS).
 
   - Token invalidation:
@@ -35,10 +35,10 @@ We plan to add this features in the next months.
       2. Integrate with Grafana.
 
 ### Controller features
-We plan to improve controller with:
+We plan to improve controller by:
 
-  - Optimize authorizator modification.
-  - Optimize container escalation.
+  - Optimizing authorizator modification.
+  - Optimizing container escalation process.
 
 ## Need more?
 Do you miss something? Contat us by email or just add issues to our repo.
