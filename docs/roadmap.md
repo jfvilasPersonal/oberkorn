@@ -18,10 +18,12 @@ We plan to add this features in the next months.
       3. Facebook validator.
       4. ~~Custom validator. Ability to include external JS or TS code that can be injected in the authorizator as a plugin.~~
       5. External validator. Ability to invoke an external validator (via HTTP/HTTPS).
+      6. Basic Auth Secret. It's similar to Basic Auth List but credentials are stored in a Secret, so users can change it's passwords.
 
   - UX:
-      1. Add a customizable login page, so applications can be deployed without worrying about authentication nor authorization, I mean, all this tasks would be performed in the Oberkorn authorizatior, just by configuring rulesets.
+      1. Add a customizable login page, so applications can be deployed without worrying about authentication nor authorization, I mean, all this tasks would be performed in the Oberkorn authorizator, just by configuring rulesets.
       2. Create a console website for accessing a dashboard where admins can view the status of Oberkorn.
+      3. Create the demo application where Oberkorn authorizators can be defined, tested and deployed.
 
   - Token invalidation:
       1. Invalidate token according to claim values.
