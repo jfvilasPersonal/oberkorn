@@ -19,6 +19,10 @@ We plan to add this features in the next months.
       4. ~~Custom validator. Ability to include external JS or TS code that can be injected in the authorizator as a plugin.~~
       5. External validator. Ability to invoke an external validator (via HTTP/HTTPS).
 
+  - UX:
+      1. Add a customizable login page, so applications can be deployed without worrying about authentication nor authorization, I mean, all this tasks would be performed in the Oberkorn authorizatior, just by configuring rulesets.
+      2. Create a console website for accessing a dashboard where admins can view the status of Oberkorn.
+
   - Token invalidation:
       1. Invalidate token according to claim values.
       2. Invalidate token for a specific user (subject).
