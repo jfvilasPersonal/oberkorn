@@ -1,5 +1,5 @@
 # Change log
-Although not too exhaustive, this page contains some major 
+Although not too exhaustive, this page contains some detail on what we have been done on each version.
 
 ## 0.2
 Added:
