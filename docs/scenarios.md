@@ -242,3 +242,73 @@ spec:
 *Easy* and **classic**, isn't it?
 
 Please, take into account that the user list (and the passwords) are in fact a **static list**, this way of protecting resources has several specific use cases, like and administrator website, an operation website or simple applications like those. And, as you have guessed, users cannot change passwords.
+
+
+## Using Google (SSO)
+If you want your application to work with Google users you need to use a Google validator, what is really simple: it has no configuration parameters. The configuration must in fact be done on the login process and not in the token validation process.
+
+To cover this scenario we will show you how to configure the login process and how not to configure the Google validator.
+
+### 1. Login
+You first need to create a clientid for this purpose in your Google cloud console. Follow this steps:
+
+  1. Select your google cloud project in the console and navigate to 'APIs & Services'
+  2. Select 'Credentials' on the left menu.
+  3. Click 'Create credentials' and select the option 'OAuth client ID'. Fill-in the parameters:
+     - **Application type** will be 'Web Application'.
+     - **Name**: the name of your web application (feel free).
+     - **Authorized JavaScript Origins**: the origin URL's that will invoke the login process, for example 'http://localhost'.
+     - **Autorized redirect URIs**: the URI/URIs where Google redirect the user to after login (for example http://localhost).
+  4. You will receive a client ID and a client secret (write it down immediately).
+
+Now, on your web application you must configure the magic Google login button. Just paste this code (adding your client id in the corresponding parameter):
+
+```html
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<div id="g_id_onload"
+      data-client_id="ENTER-HERE-YOUR-CLIENT-ID"
+      data-ux_mode="redirect"
+      data-login_uri="http://localhost">
+</div>
+<div class="g_id_signin" data-type="standard"></div>
+```
+
+When a user succesfully signs in with this magic Google button, Google will redirect him to your redirect URI, but, instead of getting an access token in the query string (as you could expect..., a typical "http://localhost#acces_token=eyfhsjetutlkjsg...."), you'll get a POST to your redirect URI with the token in the body, in a parameter named 'credential'.
+
+### 2. Protect your application with Google tokens
+You have just performed the hardest part. Now protecting your endpoints by requesting users to present Google access tokens is as simple as defining a Google validator and adding it to your ruleset.
+
+```yaml
+apiVersion: jfvilas.at.outlook.com/v1
+kind: ObkAuthorizator
+metadata:
+  name: ja-jfvilas
+  namespace: dev
+spec:
+  config:
+    replicas: 1
+  ingress:
+    name: ingress-jfvilas
+    provider: ingress-nginx
+    class: nginx
+  validators:
+    - google:
+        name: testgoogle
+        audience: ENTER-HERE-YOUR-CLIENT-ID
+  ruleset:
+    # unrestricted
+    - uri: "/"
+      uritype: "exact"
+      type: "unrestricted"
+    # user must present a valid (not expired, not corrupt) token
+    - uri: "/protect/"
+      uritype: "prefix"
+      type: "valid"
+      validators: [ testgoogle ]
+```
+This authorizator:
+  1. Allows free access to your website root ("/").
+  2. Requires a valid token emitted specifically to your application in order to let the users access the path "/protect/...". This job is done thanks to the use of the **audience** property when defining the validator, where you must enter your client id. If you don't specify and audience, any Google user could use your application.
+
+*Easy* and **googlefied**, isn't it?
+

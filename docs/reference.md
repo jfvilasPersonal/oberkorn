@@ -91,10 +91,11 @@ The 'validators' section contains a set of validators of different types that yo
 Each validator has its own type, and thus its own specific paramters to configure it. Current version of Oberkorn supports following validators:
 
   - Azure B2C
+  - Google
   - AWS Cognito
   - Azure AD (Entra ID)
   - KeyCloak
-  - Basic Auth (classical web authentication)
+  - Basic Auth List (classical web authentication)
   - Custom
 
 All validators include, aside from its specific configuration parameters, this 3 properties:
@@ -115,6 +116,7 @@ When a request needs to be validated, the authorizator will:
 
 This is the default behaviour, but, when working with corporate applications that are not exposed to internet, that is, runnning in a trusty environment, the verification of the token may not be needed, so you can disable the verification by setting this parameter to 'false'. The JWT tokens will be decoded and its content will be checked if a rule requires doing it, but the signatures will not be verified.
 
+**NOTE:** Validators that do not user cryptographic systems to cypher and sign the token do ignore the 'verify' property, they do just decoding and validation.
 
 ### Azure B2C
 These are the properties that define an Azure B2C validator.
@@ -133,6 +135,23 @@ The region where your AWS Cognito service has been deployed, something like "eu-
 
 ##### userpool [mandatory] [string]
 The name of the userpool of your AWS Cognito service, something like "eu-west-1_up4ur74up" or " us-east-2_47h3hkgmu"
+
+
+### Google
+These are the properties that define an Google validator. Please keep in mind you need a client-id for user sign-in, but you don't need it to use, decode or verify tokens. this validator can be used as an **SSO mechanism for Google IdP-managed users**.
+
+There is no configuration needed for using Google tokens, since this validator uses Google users (there is no tenant, the tenant so Google itself).
+
+
+#### Example
+Following you can find a sample 'validators' section including a Google validator.
+```yaml
+validators:
+  - google:
+      name: test-google-validator
+```
+
+Please refer to scenarios page to review some samples on how to use this SSO validator. 
 
 
 ### Azure AD
@@ -199,6 +218,48 @@ Following you can find a sample Basic Auth validator of type "List", that is, a 
           - name: u2
             password: p2
 ```
+
+
+### Custom
+The Custom validator allow you to define your aown validation mechanism vi a JavaScript Function. This is how ti works:
+
+  1. The end user sends a request with authorizartion  info (via Authorization header).
+  2. The Custom validator extracts data from the header and send it to your function.
+  3. You evaluate the request according to your own rules, and yoy decide what to do:
+      - If you want to authorize the reequest your function must send back a string with access information (or whatever you want, but not null nor undefined).
+      - If you want to reject the request, the *function must return undefined*.
+
+How do you configure a validator like this?
+
+  1. You must create an authorization function like this:
+     ```javascript
+        function (context) {
+          if (context.token!==null && contexto.token.toLowercase()==='enjoy')
+            return "Ok";
+          else
+            return null;
+        }
+     ```
+  2. You must store the function in a config map, and give access to the authorizator so it can read the config map (using a kubernetes role and a kubernetes role binding). You can find an example in the samples folder (named 'sample-custom.yaml').
+  3. You configure the validator adding the needed properties to use the validator.
+
+##### configMap [mandatory] [string]
+The name of the config map that holds the JavaScript function.
+
+##### key [mandatory] [string]
+The name of the key (inside the config map) that holds the JavaScript function
+
+#### Examples
+Following you can find a sample Custom validator (please refer to samples directoy inside obk-authorizator project for a complete sample).
+
+```yaml
+  validators:
+    - custom:
+        name: testcustom
+        configMap: test-custom-validator-cm
+        key: authorize-function
+```
+
 
 
 ## **ruleset**
