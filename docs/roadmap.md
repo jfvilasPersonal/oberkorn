@@ -24,6 +24,7 @@ We plan to add this features in the next months.
       1. Add a customizable login page, so applications can be deployed without worrying about authentication nor authorization, I mean, all this tasks would be performed in the Oberkorn authorizator, just by configuring rulesets.
       2. Create a console website for accessing a dashboard where admins can view the status of Oberkorn.
       3. Create the demo application where Oberkorn authorizators can be defined, tested and deployed.
+      4. Add 'fcgiwrap' to NGINX-based demo container so Google tokens can be moved from POST body to GET query string.
 
   - Token invalidation:
       1. Invalidate token according to claim values.
