@@ -4,7 +4,7 @@
 * [Ingress configuration](ingress-configuration.md)
 * [Use cases](usecases.md)
 * [Scenarios](scenarios.md)
-* [Roadmap](roadmap.md)
 * [IdM configuration](idm-configuration.md)
+* [Roadmap](roadmap.md)
 * [Change log](changelog.md)
 * [Reference](reference.md)
