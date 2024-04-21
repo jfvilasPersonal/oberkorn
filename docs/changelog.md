@@ -16,7 +16,7 @@ Changes:
 Correction:
   - Some minor optimizations on log management
 
-  
+
 ## 0.1
 The very first version includes:
   - the controller
