@@ -4,7 +4,7 @@ Although not too exhaustive, this page contains some detail on what we have been
 ## 0.2
 Added:
   - **Keycloak** validator.
-  - **Basic Aauth List** validator.
+  - **Basic Auth List** validator.
   - **Custom** validator.
   - **Google** validator.
   - Automatic version creation.
