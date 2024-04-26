@@ -18,7 +18,7 @@ We plan to add this features in the next months.
       3. Facebook validator.
       4. ~~Custom validator. Ability to include external JS or TS code that can be injected in the authorizator as a plugin.~~ **DONE**
       5. External validator. Ability to invoke an external validator (via HTTP/HTTPS).
-      6. Basic Auth Secret. It's similar to Basic Auth List but credentials are stored in a Secret, so users can change it's passwords.
+      6. ~~Basic Auth Secret. It's similar to Basic Auth List but credentials are stored in a Secret, so users can change it's passwords.~~ **DONE**
 
   - UX:
       1. Add a customizable login page, so applications can be deployed without worrying about authentication nor authorization, I mean, all this tasks would be performed in the Oberkorn authorizator, just by configuring rulesets.
@@ -27,14 +27,14 @@ We plan to add this features in the next months.
       4. Add 'fcgiwrap' to NGINX-based demo container so Google tokens can be moved from POST body to GET query string.
 
   - Token invalidation:
-      1. Invalidate token according to claim values.
-      2. Invalidate token for a specific user (subject).
+      1. Invalidate token according to claim values (requires having an admin console).
+      2. Invalidate token for a specific user (subject property of tokens) (requires having an admin console).
 
   - JWKS keys management
-      1. Refresh cached signing keys schedulable.
-      2. Use different available keys when validating tokens.
+      1. Refresh cached signing keys in a schedulable way.
+      2. Use different available keys (from JWKS config) when validating tokens.
 
-  - Tracing:
+  - Tracing & Audit:
       1. Monitor and trace a specific user (i.e., token).
       
   - Monitoring
