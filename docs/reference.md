@@ -95,7 +95,7 @@ Each validator has its own type, and thus its own specific paramters to configur
   - AWS Cognito
   - Azure AD (Entra ID)
   - KeyCloak
-  - Basic Auth List (classical web authentication)
+  - Basic Auth (classical web authentication)
   - Custom
 
 All validators include, aside from its specific configuration parameters, this 3 properties:
@@ -186,39 +186,80 @@ validators:
       verify: true
 ```
 
-### Basic Auth List
-These are the properties that define a Basic Auth List validator. The Basic Authentication works like classical web authentication:
+### Basic Auth
+These are the properties that define a Basic Auth validator. The Basic Authentication works like classical web authentication:
 
-  1. The user tries to access a resource, an URL.
+  1. The user tries to access a resource, an URI.
   2. The browser doesn't send any kind of authentication info.
   3. The server answers the browser by sending a 401 and adding a 'WWW-Authenticate' header.
   4. The user enters its credentilas (user and password).
   5. The browser re-sends the original request adding an Authorization header.
 
-This validator uses a static list of users and passwords. See other Basic Auth validators for being able to use more useful alternatives.
+This validator can work in two different modes:
+
+  - **Static user list**. The validator uses a static list of users and passwords that are read from the definition YAML.
+  - **Secret user list**. The validator uses a Kubernetes secret to read/write users database.
 
 
 ##### realm [mandatory] [string]
 The name of the realm you want to use.
 
+##### storeType [mandatory] [string]
+Type of storage used for storing users and passwords. Two values are possible:
+
+  - '**inline**', users are read from the validator configuration YAML.
+  - '**secret**', users are read from the validator YAML if the exist, and will be stored and retrieved in a Kubernetes secret.
+
+##### storeSecret [string]
+the name of a secret where users and passwords will be stored.
+
+##### storeKey [string]
+The key inside the secrete that will hold the users and passwords.
+
 ##### users [array]
 You must add here an array of users and passwords (See sample for correct syntax).
 
+
 #### Examples
-Following you can find a sample Basic Auth validator of type "List", that is, a static list of users (and their passwords).
+Following you can find a sample Basic Auth validator of type "inline", that is, a *static list* of users (and their passwords).
 
 ```yaml
-  validators:
-    - basic-auth-list:
-        name: testBasicAuth
-        realm: test-realm
-        users: 
-          - name: u1
-            password: p1
-          - name: u2
-            password: p2
+validators:
+  - basicAuth:
+      name: testBasicList
+      realm: testrealm
+      storeType: inline
+      users: 
+        - name: julio
+          password: angel
+        - name: u2
+          password: p2
 ```
 
+What follows is a Basic Auth validator that stores users and passwords in a *Kubernetes secret*.
+
+```yaml
+validators:
+  - basicAuth:
+      name: testSecret
+      realm: testrealm
+      storeType: secret
+      storeSecret: users
+      storeKey: db
+      users: 
+        - name: u1
+          password: p1333
+        - name: u2
+          password: p2333
+```
+
+You can add initial users/passwords by using 'users' property or you can just rely on your secret. The content of the secret must be a JSON string with this format:
+
+```JSON
+{ 'user': 'password', 'user2': 'password2'... }
+```
+
+When the authorizator starts, it reads all users existing in the YAML file and loads them into the secret **IF THEY DO NOT ALREADY EXIST**.
 
 ### Custom
 The Custom validator allow you to define your aown validation mechanism vi a JavaScript Function. This is how ti works:
