@@ -262,23 +262,23 @@ You can add initial users/passwords by using 'users' property or you can just re
 When the authorizator starts, it reads all users existing in the YAML file and loads them into the secret **IF THEY DO NOT ALREADY EXIST**.
 
 ### Custom
-The Custom validator allow you to define your aown validation mechanism vi a JavaScript Function. This is how ti works:
+The Custom validator allow you to define your own validation mechanism via JavaScript function. This is how it works:
 
-  1. The end user sends a request with authorizartion  info (via Authorization header).
-  2. The Custom validator extracts data from the header and send it to your function.
-  3. You evaluate the request according to your own rules, and yoy decide what to do:
-      - If you want to authorize the reequest your function must send back a string with access information (or whatever you want, but not null nor undefined).
-      - If you want to reject the request, the *function must return undefined*.
+  1. The end user sends a request with authorizartion info (via Authorization header).
+  2. The Custom validator extracts data from the header and sends it to your function.
+  3. You evaluate the request according to your own rules, and you decide what to do:
+      - If you want to authorize the request your function must send back a string with access information (or whatever you want, but not null nor undefined).
+      - If you want to reject the request, the ***function must return undefined***.
 
 How do you configure a validator like this?
 
   1. You must create an authorization function like this:
      ```javascript
         function (context) {
-          if (context.token!==null && contexto.token.toLowercase()==='enjoy')
+          if (context.token!==null && context.token.toLowercase()==='enjoy')
             return "Ok";
           else
-            return null;
+            return undefined;
         }
      ```
   2. You must store the function in a config map, and give access to the authorizator so it can read the config map (using a kubernetes role and a kubernetes role binding). You can find an example in the samples folder (named 'sample-custom.yaml').
