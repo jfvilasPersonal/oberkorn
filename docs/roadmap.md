@@ -46,6 +46,8 @@ We plan to improve controller by:
 
   - Optimizing authorizator modification.
   - Optimizing container escalation process.
+  - Perform semantic validation on authorizatro yaml's, for example, check that rule-referenced validators do exist in 'validators' secion
+  - Add front and API
 
 ## Need more?
 Do you miss something? Contat us by email or just add issues to our repo.
