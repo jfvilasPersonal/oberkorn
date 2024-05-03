@@ -22,7 +22,7 @@ We plan to add this features in the next months.
 
   - UX:
       1. Add a customizable login page, so applications can be deployed without worrying about authentication nor authorization, I mean, all this tasks would be performed in the Oberkorn authorizator, just by configuring rulesets.
-      2. Create a console website for accessing a dashboard where admins can view the status of Oberkorn.
+      2. ~~Create a console website for accessing a dashboard where admins can view the status of Oberkorn.~~ **DONE**
       3. Create a fashionable demo application where Oberkorn authorizators can be defined, tested and deployed.
       4. Add 'fcgiwrap' to NGINX-based demo container so Google tokens can be moved from POST body to GET query string.
 
@@ -44,10 +44,9 @@ We plan to add this features in the next months.
 ### Controller features
 We plan to improve controller by:
 
-  - Optimizing authorizator modification.
-  - Optimizing container escalation process.
-  - Perform semantic validation on authorizatro yaml's, for example, check that rule-referenced validators do exist in 'validators' secion
-  - Add front and API
+  - Optimize authorizator modification (right now is just an 'apply' over existing deployed resources).
+  - Optimize container escalation process.
+  - Perform semantic validation on authorizator yaml's, for example, check that rule-referenced validators do exist in 'validators' section.
 
 ## Need more?
 Do you miss something? Contat us by email or just add issues to our repo.

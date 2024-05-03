@@ -1,6 +1,11 @@
 # Change log
 Although not too exhaustive, this page contains some detail on what we have been done on each version.
 
+## 0.3
+Added
+  - **Basic Auth** validator with static and dynamic user list (based on Kubernetes secrets).
+  - **Web console**. Right now you can see your config and performance, but no changes can be done to Oberkorn configuration via console.
+
 ## 0.2
 Added:
   - **Keycloak** validator.
