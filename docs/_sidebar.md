@@ -2,6 +2,7 @@
 * [Installation](installation.md)
 * [Ingress installation](ingins.md)
 * [Ingress configuration](ingress-configuration.md)
+* [Web Console](webconsole.md)
 * [Use cases](usecases.md)
 * [Scenarios](scenarios.md)
 * [IdM configuration](idm-configuration.md)
