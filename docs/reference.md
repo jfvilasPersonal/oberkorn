@@ -1,8 +1,8 @@
 # Reference
-Here you can find reference information for creating and operating an Oberkorn authorizator. This reference page documents all the parameters you can/must code in a YAML file in order to create an authorizator via 'kubectl apply -f'.
+Here you can find reference information for creating and operating an Oberkorn authorizator. This reference page documents all the parameters you can/must code in a YAML file in order to create or modify an Oberkorn authorizator via 'kubectl apply -f'.
 
 ## YAML
-To create an Oberkorn authorizator you must create a YAML file containing all the configuration that defines your needs to protect your web applications running in the Kubernetes cluster. This is a basic (minimal, with no rule restrictions) Oberkorn authorizator:
+To create an Oberkorn authorizator you must create a YAML file containing all the configuration that defines your needs to protect your web resources running inside your Kubernetes cluster. what follows is a basic (minimal, with no rule restrictions) Oberkorn authorizator:
 
 ```yaml
 apiVersion: jfvilas.at.outlook.com/v1
@@ -22,14 +22,16 @@ spec:
         region: eu-west-1
         userpool: eu-west-1_abcdefg
         iss: https://cognito-idp.eu-west-1.amazonaws.com/eu-west-1_abcdefg
-  ruleset:
+  rulesets:
     # unrestricted
-    - uri: "/"
-      uritype: "prefix"
-      type: "unrestricted"
+    - uriPrefix: [ '' ]
+      name: global-ruleset
+      - uri: "/"
+        uritype: "prefix"
+        type: "unrestricted"
 ```
 
-Let's explain the content. As any usual kubernetes resource, you must specify the 'apiVersion' and the 'kind' of the object you are defining. In this case, we are creating an Oberkorn Authorizator, so the kind is 'ObkAuthorizator'.
+Let's explain the content. As any usual kubernetes resource, you must specify the 'apiVersion' and the 'kind' of the object you are defining. In this case, we are creating an Oberkorn Authorizator, so the kind is 'ObkAuthorizator' (this kind is created when you install the Oberkorn controller, in the CRD file).
 
 The 'metadata' section works as usual, you must define the name of the authorizator you are creating and the 'namespace' it belongs to.
 
@@ -37,16 +39,22 @@ Next section of the YAML is were the magic is built: **the *spec***. The 'spec' 
   - *config*. The 'config' section defines general behaviour of the authorizator, like the number of replicas you want to have.
   - *ingress*. The 'ingress' section is where you can correlate an authorizator with an ingress.
   - *validators*. In 'validators' section you can define all the validator services you will use all along your ruleset to protect your applications.
-  - *ruleset*. Here you define all the rules that protect your applications.
+  - *rulesets*. Here you define all the rulesets that protect your applications. Each ruleset is a set of rules.
 
 
 ## **config**
 'config' is a general section where you define how the authorizator will behave regarding the performance or monitoring, that is, execution related aspects. These are the 'config' parameters.
 
-##### replicas [optional] [number]
+##### replicas [number] [optional] [default: 1]
 You can specify how many containers will be running in parallel in order to fulfill request validations from users. The default value is 1, but this value can grow according to your applications needs.
 
-##### prometheus [optional] [boolean]
+##### api [boolean] [optional] [default: false]
+If you want to manage the authorizator via API or you want to use the controller web console to manage the authorizator, you must enable the API interface (and do some addiotional configuration on services and ingresses in order to make the API reachable from outside the cluster).
+
+##### logLevel [number] [optional] [default: 0]
+If your want to have more info on what is doing the authorizator you can increase the log level. Default value (0), only shows authorizator starting info and severe errors.
+
+##### prometheus [boolean] [optional] [default: false]
 If you plan to monitor your authorizator performance by using Prometheus, the only thing you need to do is set this parameter to 'true' and configure a target in your Prometheus cluster. Please take into account that if your Promethus is running outside the kubernetes cluster, you must add an ingress to allow access to '/metrics' endpoint of your authorizators.
 
 Following you can find a sample config section:
@@ -54,16 +62,17 @@ Following you can find a sample config section:
 ```yaml
 config:
   replicas: 3
+  api: true
   prometheus: true
 ```
 
 ## **ingress**
 The ingess section is used to establish a permanent relation between an ingress controller and an Oberkorn authorizator. You only need to set the name of the ingress (namespace must be the same as the one specified in the authorizator).
 
-##### name [mandatory] [string]
+##### name [string] [mandatory]
 The name of the ingress that will send authorization requests to this authorizator.
 
-##### provider [mandatory] [string]
+##### provider [string] [mandatory]
 The provider of the ingress controller. Currently these are the supported providers:
 
 | Provider | Value | Notes |
@@ -73,7 +82,7 @@ The provider of the ingress controller. Currently these are the supported provid
 | HAProxy | haproxy | It's still under testing. |
 | Traefik | traefik | |
 
-##### class [mandatory] [string]
+##### class [string] [mandatory]
 The ingress class of the ingress.
 
 Following you can find a sample config section:
@@ -100,40 +109,42 @@ Each validator has its own type, and thus its own specific paramters to configur
 
 All validators include, aside from its specific configuration parameters, this 3 properties:
 
-##### name [mandatory] [string]
+##### name [string] [mandatory]
 The name of the validator, that you will use later to link a specific rule to a validator. Please note that the name must be unique, but you can create different validators of the same type.
 
-##### iss [optional] [string]
+##### iss [string] [optional]
 You can define a validator just defining its name, its tenant and its userflow (for instance). Later, when creating the rules, you can add conditions to the tokens emitted by a specific validator. Anyway, if you want to enforce a specific 'issuer' for the JWT tokens you plan to use, you can specify here a issuer value in such a way that every token to be validated against this validator must have an 'iss' value that matches the one specified here.
 
-##### aud [optional] [string]
+##### aud [string] [optional]
 In a similar way, when creating rules you can add conditions to the tokens emitted by a specific validator. If you want to enforce a specific 'audience', you can specify here an audience value in such a way that every token to be validated against this validator must have an 'aud' value that matches the one specified here.
 
-##### verify [optional] [boolean]
+##### verify [boolean] [optional]
 When a request needs to be validated, the authorizator will:
   1. Decode the token.
   2. Verify the signature of the token.
 
 This is the default behaviour, but, when working with corporate applications that are not exposed to internet, that is, runnning in a trusty environment, the verification of the token may not be needed, so you can disable the verification by setting this parameter to 'false'. The JWT tokens will be decoded and its content will be checked if a rule requires doing it, but the signatures will not be verified.
 
-**NOTE:** Validators that do not user cryptographic systems to cypher and sign the token do ignore the 'verify' property, they do just decoding and validation.
+**NOTE:** Validators that do not use cryptographic systems to cypher and sign tokens do ignore the 'verify' property, they do just decoding and validation.
+
 
 ### Azure B2C
 These are the properties that define an Azure B2C validator.
 
-##### tenant [mandatory] [string]
+##### tenant [string] [mandatory]
 The tentant name of your Azure B2C service.
 
-##### userflow [mandatory] [string]
+##### userflow [string] [mandatory]
 The name of the user flow to use.
+
 
 ### AWS Cognito
 These are the properties that define an AWS Cognito validator.
 
-##### region [mandatory] [string]
+##### region [string] [mandatory]
 The region where your AWS Cognito service has been deployed, something like "eu-west-1" or "us-east-2".
 
-##### userpool [mandatory] [string]
+##### userpool [string] [mandatory]
 The name of the userpool of your AWS Cognito service, something like "eu-west-1_up4ur74up" or " us-east-2_47h3hkgmu"
 
 
@@ -141,7 +152,6 @@ The name of the userpool of your AWS Cognito service, something like "eu-west-1_
 These are the properties that define an Google validator. Please keep in mind you need a client-id for user sign-in, but you don't need it to use, decode or verify tokens. this validator can be used as an **SSO mechanism for Google IdP-managed users**.
 
 There is no configuration needed for using Google tokens, since this validator uses Google users (there is no tenant, the tenant so Google itself).
-
 
 #### Example
 Following you can find a sample 'validators' section including a Google validator.
@@ -157,17 +167,17 @@ Please refer to scenarios page to review some samples on how to use this SSO val
 ### Azure AD
 These are the properties that define an Azure AD validator.
 
-##### tenant [mandatory] [string]
+##### tenant [string] [mandatory]
 The name of the tentant of your Entra ID service.
 
 
 ### Keycloak
 These are the properties that define a KeyCloak validator.
 
-##### url [mandatory] [string]
+##### url [string] [mandatory]
 The base URL where the KeyCloak cab be accessed. Typucally it would conntain a vlaue like "https://my.keycloak.deployment.com", but, if the KeyCloak you want to use has been deloyed the tha same Kubernetes cluster where Oberkorn runs, then you should use internal DNS name, like "http://keycloak.dev.svc.cluster.local:8080", for example, using standard DNS names inside Kubernetes (service name, namespace and the "cluster.local" TLD).
 
-##### realm [mandatory] [string]
+##### realm [string] [mandatory]
 The name of the realm you want to use.
 
 #### Examples
@@ -187,7 +197,7 @@ validators:
 ```
 
 ### Basic Auth
-These are the properties that define a Basic Auth validator. The Basic Authentication works like classical web authentication:
+A Basic Authentication works like classical web authentication, what follows is a typical scenario:
 
   1. The user tries to access a resource, an URI.
   2. The browser doesn't send any kind of authentication info.
@@ -195,28 +205,31 @@ These are the properties that define a Basic Auth validator. The Basic Authentic
   4. The user enters its credentilas (user and password).
   5. The browser re-sends the original request adding an Authorization header.
 
-This validator can work in two different modes:
+Basic Auth validator can work in two different modes:
 
-  - **Static user list**. The validator uses a static list of users and passwords that are read from the definition YAML.
-  - **Secret user list**. The validator uses a Kubernetes secret to read/write users database.
+  - **Static user list**. The validator uses a static list of users and passwords that are read from the YAML definition.
+  - **Secret user list**. The validator uses a Kubernetes secret to read/write users database (initial values can be read from the YAML definition).
 
+These are the properties that define a Basic Auth validator.
 
-##### realm [mandatory] [string]
+##### realm [string] [mandatory]
 The name of the realm you want to use.
 
-##### storeType [mandatory] [string]
+##### storeType [string] [mandatory]
 Type of storage used for storing users and passwords. Two values are possible:
 
   - '**inline**', users are read from the validator configuration YAML.
   - '**secret**', users are read from the validator YAML if the exist, and will be stored and retrieved in a Kubernetes secret.
 
-##### storeSecret [string]
-the name of a secret where users and passwords will be stored.
+##### storeSecret [string] [optional]
+Yhe name of a Kubernetes secret where users and passwords will be stored.
 
-##### storeKey [string]
-The key inside the secrete that will hold the users and passwords.
+##### storeKey [string] [optional]
+The key inside the secret that will hold the users and passwords. Users and passwords are stored as a JSON object with this format:
 
-##### users [array]
+{ 'user1':'password1', 'user2':'password2' }
+
+##### users [array] [optional]
 You must add here an array of users and passwords (See sample for correct syntax).
 
 
@@ -259,18 +272,19 @@ You can add initial users/passwords by using 'users' property or you can just re
 { 'user': 'password', 'user2': 'password2'... }
 ```
 
-When the authorizator starts, it reads all users existing in the YAML file and loads them into the secret **IF THEY DO NOT ALREADY EXIST**.
+When the authorizator starts, it reads all users existing in the YAML file and loads them into the secret key **IF THEY DO NOT ALREADY EXIST**. If a user exists in the YAML and in the secret key at the same time, the authorizator will do noting with the user (keeping his password unchanged).
+
 
 ### Custom
-The Custom validator allow you to define your own validation mechanism via JavaScript function. This is how it works:
+The Custom validator allow you to define your own validation mechanism via a JavaScript function. This is how it works:
 
-  1. The end user sends a request with authorizartion info (via Authorization header).
+  1. The end user sends a request with authorization info (via Authorization header).
   2. The Custom validator extracts data from the header and sends it to your function.
-  3. You evaluate the request according to your own rules, and you decide what to do:
-      - If you want to authorize the request your function must send back a string with access information (or whatever you want, but not null nor undefined).
+  3. Your function will evaluate the request according to your own rules, and you decide what to do:
+      - If you want to authorize the request your function must send back a string with access information (or whatever you want, but not **undefined**).
       - If you want to reject the request, the ***function must return undefined***.
 
-How do you configure a validator like this?
+How do you configure a validator like this? These are the basic steps:
 
   1. You must create an authorization function like this:
      ```javascript
@@ -284,10 +298,12 @@ How do you configure a validator like this?
   2. You must store the function in a config map, and give access to the authorizator so it can read the config map (using a kubernetes role and a kubernetes role binding). You can find an example in the samples folder (named 'sample-custom.yaml').
   3. You configure the validator adding the needed properties to use the validator.
 
-##### configMap [mandatory] [string]
+what follow are the parameters needed to configure a Custom validator.
+
+##### configMap [string] [mandatory]
 The name of the config map that holds the JavaScript function.
 
-##### key [mandatory] [string]
+##### key [string] [mandatory]
 The name of the key (inside the config map) that holds the JavaScript function
 
 #### Examples
@@ -302,15 +318,75 @@ Following you can find a sample Custom validator (please refer to samples direct
 ```
 
 
+## **rulesets**
+This is where you must define what rules will drive the security of your applications. As the name states, the content of this section is a set of rulesets (each ruleset is an array of rules, in fact).
+When a user request needs to be validated, all the rulesets uri prefixes are evalauated against the request URI in order to decide what ruleset should be used for evaluating the request. When a ruleset has been selected, all the rules in the ruleset are evaluated unless one of them evaulates to 'true' (or a behaviour indicates thet processing must stop). In this case, no more rule evaluation is performed, and a response is sent back to the ingress controller.
 
-## **ruleset**
-This is where you can define what rules will drive the security of your application. As the name states, the content of this section is a rule set (an array of rules, in fact).
-When a user request needs to be validated, all the rules in the ruleset are evaluated unless one of them evaulates to 'true'. In this case, no more rule evaluation is performed, and a positive response is sent back to the ingress controller. This default way of working can be modified by changing the behaviours (as explained downwards).
+This default way of evaluating rules can be modified by changing the behaviours (as explained downwards). These are the properties that define a ruleset:
 
-##### uri [mandatory] [string] 
-This is a uri specification that must match user request in order to be evaluated. If the URI the user wants to access does not match this parameter, this rule will not be evaluated. URI's inside rules are relative, that is, do not include the hostname, they are referred to **just the path**.
+##### name [string] [mandatory]
+This property defines the name of a ruleset. A ruleset is typically a set of rules created for protecting one application, so it would be a good idea to correlate the ruleset name with the application name.
 
-##### uritype [mandatory] [string] 
+##### uriPrefix [array of string] [mandatory]
+This is a list of URI prefixes that will be used to match user requests for deciding what ruleset to use when a request is received. For example, let's assume we have created two rulestes like this:
+
+```yaml
+rulesets:
+  - name: general
+    uriPrefix: [ '/favicon.ico'  ]
+    rules: 
+      # unrestricted
+      - uris: [ '' ]
+        uritype: exact
+        type: unrestricted
+  - name: app1
+    uriPrefix: [ '/app1' ]
+    rules: 
+      # unrestricted
+      - uri: ''
+        uritype: prefix
+        type: valid
+        validators: [ 'val1' ]
+```
+
+When the user requests access to a URI like 'http://your.dns.name/app1/index.html' the authorizator will select the second ruleset, and after that, all the rules in the ruleset named **'app1'** will be evaluated.
+
+Imagine tha 'index.html' page has a referen to the *favicon* in the root directory, that is, something like 'http://your.dns.name/favicon.ico'. In such a case the authorizator would select the ruleset named 'general' and it would concede access, since there is an 'unrestricted' rule that matches the user request.
+
+##### rules
+The 'rules' parameter is an array of rules. These are the properties that each rule must/can contain:
+
+##### uri [string] [optional]
+This is a uri specification that must match user request in order to be evaluated. If the URI the user wants to access does not match this parameter, this rule will not be evaluated. URI's inside rules are relative, that is, do not include the hostname nor the ruleset uri prefix, they are referred to **just the local path**.
+
+##### uris [array of string] [optional]
+If you face the need of creating a rule that is applicable to more than one uri, you can use the 'uris' parameter instead of a single 'uri' parameter. In this case you can provide an array of uris like in this example:
+
+```yaml
+rules: 
+  # unrestricted
+  - uris: [ '/static', '/js', '/css' ]
+    uritype: exact
+    type: unrestricted
+  # protected
+  - uri: '/api'
+    uritype: exact
+    type: unrestricted
+```
+
+Parameters 'uri' and 'uris' do exist at the same time for your convenience, you can use one of them, just the other one or even both of them. When evaluating rules the authorizator will check all of them. So, if you create a rule like this one:
+
+```yaml
+rules:
+  - uri: '/static'
+    uris: [ '/js', '/css' ]
+    uritype: exact
+    type: unrestricted
+```
+
+In this case, the authroizator will evaluate all three paths (static, js and css) against user request.
+
+##### uritype [string] [mandatory]
 Every URI in a rule can be one of this types:
 
   - 'exact'. The URI requested by the user must be exactly equal to the URI of this rule.
@@ -330,8 +406,9 @@ First rule will be considered to be evaluated if the URI requested by the user i
 Second rule whill be considered to be evaluated if the URI requested by the user does start with '/api/'. For example, if the request URI is '/api/customer' the rule will be evaluated. But, if the requested URI is '/apiculture', the rule will not be evaluated.
 The third rule will be evaluated if the requested URI matches the regex. For example, if the user requests '/media/image.jpeg', the rule will not be evaluated. But, if the requested URI is '/media/345.jpeg' the rule will be evaluated.
 
+Please be aware that the uri type has a rule scope, so all uris in the rule will have the same type.
 
-##### type [mandatory] [string] 
+##### type [string] [mandatory]
 Every rule has a type, which defines how the rule will be evaluated. These are the different types supported:
 
   - unrestricted
@@ -356,7 +433,7 @@ Conversely, an 'or' rule type will evaluate to 'true' if at least just one of th
 
 The sub-rules of 'and' and 'or' rules can be specified usign the parameter 'subset' (see below).
 
-##### policy [optional] [string] 
+##### policy [string] [optional]
 Every 'claim' rule type must have a policy. A policy states how a rule type must be evaluated. These are the currently supported policies:
 
   - present
@@ -379,7 +456,7 @@ You can find the expanation and applicability of each of the policies in followi
  | matchesall    | The claim must match (using regex) ALL the regular expressions specified in the 'values' parameter (see below) |
  | matchesany    | The claim must match (using regex) at least ONE of the regular expressions specified in the 'values' parameter (see below) |
 
-##### values [optional] [string] 
+##### values [string] [optional]
 'values' conatins an array (a list) of values used by the policy of the rule. For example, if you have a claim named 'user_attributes' which can contain any values like USER, ADMIN or MANAGER, and you want to write a rule to validate tokens emitted for managerial people (that is ADMIN and MANAGER), you should write a rule like this:
 
 ```yaml
@@ -392,7 +469,7 @@ You can find the expanation and applicability of each of the policies in followi
       - MANAGER
 ```
 
-##### options [optional] [string] 
+##### options [string] [optional]
 When evaluating values you may need some configuration on how to perform that evaluation. You can manage it by adding a list of options. Current supported options are:
 
   - lowercase
@@ -403,7 +480,7 @@ When evaluating policies like 'is' or 'containsall', for example, you can force 
 If you do not specify lowercase or uppercase, the comparisons will be performed using a case-sensitive comparison.
 
 
-##### subset [optional] [list] 
+##### subset [array of rule] [optional]
 A subset is a set of rules contained inside a rule (like a ruleset, but specific to a rule). Subsets are only used when the **type** of a rule is 'and' or 'or'. As explainied before...
 
   - If the rule type is 'and' all the rules in the subset must evaluate to true in order to return a positive response to the ingress. When a rule in the subset evaluates to false, the evaluation of the subset is inmediatly stopped and rule evaluation is set to 'false'.
@@ -444,6 +521,14 @@ If a behaviour is not specified, these are the default behaviours assumed by the
   - **onfalse: continue**
 
 That means, if a rule evaluates to true the access is granted. If a rule evaluates to false, the evaluation process continues with next rule in the ruleset.
+
+##### ontrue [string] [optional] [default: accept]
+This parameter indicates what to do with a positive (true) response after evaluating a rule. Possible values are: **accept**, **reject** or **continue**.
+
+##### onfalse [string] [optional] [default: continue]
+This parameter indicates what to do with a negative (false) response after evaluating a rule. Possible values are: **accept**, **reject** or **continue**.
+
+
 
 ## Compatibility matrix
 Oberkorn (including controller and authorizator modules) has been succesfully tested under the following conditions:

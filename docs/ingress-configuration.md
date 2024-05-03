@@ -3,11 +3,11 @@ Installing Oberkorn is very easy, but maybe you need some help on configuring yo
 
 
 ## Ingress Nginx
-WIP
+No special actions are needed.
 
 
 ## NGINX Ingress
-You need to modify the deployment of the ingress to enable snippets (snippets are the way Oberkorn configures your ingress to support external authorization).
+You need to modify the deployment of the ingress controller to enable snippets (snippets are the way Oberkorn configures your ingress to support external authorization).
 
 ```yaml
   args:

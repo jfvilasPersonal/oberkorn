@@ -1,8 +1,6 @@
 ![logo](./_media/logo4.png)
 
-[![GitHub stars](https://img.shields.io/github/stars/jfvilasPersonal/oberkorn.svg)](https://github.com/jfvilasPersonal/oberkorn/stargazers)
-[![GitHub stars](https://img.shields.io/badge/contributions-welcome-orange.svg)](https://jfvilaspersonal.github.io/oberkorn/#/contributing)
-[![GitHub stars](https://img.shields.io/badge/project-homepage-8EA8D8.svg)](https://jfvilaspersonal.github.io/oberkorn)
+[![GitHub stars](https://img.shields.io/github/stars/jfvilasPersonal/oberkorn.svg)](https://github.com/jfvilasPersonal/oberkorn/stargazers) [![GitHub stars](https://img.shields.io/badge/contributions-welcome-orange.svg)](https://jfvilaspersonal.github.io/oberkorn/#/contributing) [![GitHub stars](https://img.shields.io/badge/project-homepage-8EA8D8.svg)](https://jfvilaspersonal.github.io/oberkorn)
 
 
 
@@ -64,15 +62,17 @@ spec:
         region: eu-west-1
         userpool: eu-west-1_abcdefg
         iss: https://cognito-idp.eu-west-1.amazonaws.com/eu-west-1_abcdefg
-  ruleset:
+  rulesets:
     # unrestricted
-    - uri: "/"
-      uritype: "exact"
-      type: "unrestricted"
-    # token must existe and be valid
-    - uri: "/api/"
-      uritype: "prefix"
-      type: "valid"
+    - name: globalRuleset
+      uriPrefix: [ '' ]
+      - uri: '/'
+        uritype: 'exact'
+        type: 'unrestricted'
+      # token must existe and be valid
+      - uris: [ '/api/', '/data/' ]
+        uritype: 'prefix'
+        type: 'valid'
 ```
 
 And that's it!

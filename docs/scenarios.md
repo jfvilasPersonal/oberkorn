@@ -29,15 +29,18 @@ spec:
         region: eu-west-1
         userpool: eu-west-1_abcdefg
         iss: https://cognito-idp.eu-west-1.amazonaws.com/eu-west-1_abcdefg
-  ruleset:
-    # token must exist and be valid
-    - uri: "/admin/"
-      uritype: "prefix"
-      type: "valid"
-    # unrestricted
-    - uri: "/public/"
-      uritype: "prefix"
-      type: "unrestricted"
+  rulesets:
+    - name: general
+      uriPrefix: [ '' ]
+      # token must exist and be valid
+      rules:
+        - uri: "/admin/"
+          uritype: "prefix"
+          type: "valid"
+        # unrestricted
+        - uri: "/public/"
+          uritype: "prefix"
+          type: "unrestricted"
 ```
 
 As you have guessed, every resource whose path starts with "/admin/..." needs a valid JWT token emited by our Cognito service to be accessed, and every resource under "/public/..." can be accessed freely. All other resource paths cannot be accessed.
@@ -74,16 +77,19 @@ spec:
         region: eu-west-1
         userpool: eu-west-1_abcdefg
         iss: https://cognito-idp.eu-west-1.amazonaws.com/eu-west-1_abcdefg
-  ruleset:
-    # token must exist and be valid
-    - uri: "/api/"
-      uritype: "prefix"
-      type: "valid"
-      onfalse: reject
-    # unrestricted
-    - uri: "/"
-      uritype: "prefix"
-      type: "unrestricted"
+  rulesets:
+    - name: general
+      uriPrefix: [ '' ]
+      rules:
+        # token must exist and be valid
+        - uri: "/api/"
+          uritype: "prefix"
+          type: "valid"
+          onfalse: reject
+        # unrestricted
+        - uri: "/"
+          uritype: "prefix"
+          type: "unrestricted"
 ```
 This YAML will create an Oberkorn authorizator which works like this:
   1. When the Nginx Ingress Controller named 'my-ingress' (in namespace 'test') receives an HTTP request, it routes the request to the Oberkorn authorizator.
@@ -123,17 +129,20 @@ spec:
         name: my-b2c-tenant
         tenat: mytenant
         userflow: B2C_1_ropc
-  ruleset:
-    # if requested uri starts with /media/ or with /css/ or with /js, access is granted, the rule will be unrestricted 
-    - uri: "^\/media\/|^\/css\/|^\/js\/"
-      uritype: "regex"
-      type: "unrestricted"
-    # if the requested uri as an ASP page (i.e., URI ends with '.asp'), there must exist a valid token
-    - uri: ".asp$"
-      uritype: "regex"
-      type: "valid"
-      validators:
-        - my-b2c-tenant
+  rulesets:
+    - name: general
+      uriPrefix: [ '' ]
+      rules:
+        # if requested uri starts with /media/ or with /css/ or with /js, access is granted, the rule will be unrestricted 
+        - uri: "^\/media\/|^\/css\/|^\/js\/"
+          uritype: "regex"
+          type: "unrestricted"
+        # if the requested uri as an ASP page (i.e., URI ends with '.asp'), there must exist a valid token
+        - uri: ".asp$"
+          uritype: "regex"
+          type: "valid"
+          validators:
+            - my-b2c-tenant
 ```
 *Easy*, isn't it?
 
@@ -171,16 +180,19 @@ spec:
         region: eu-west-1
         userpool: eu-west-1_abcdefg
         iss: https://cognito-idp.eu-west-1.amazonaws.com/eu-west-1_abcdefg
-  ruleset:
-    # token must exist and be valid
-    - uri: "/2023/"
-      uritype: "prefix"
-      type: "valid"
-      onfalse: reject
-    # unrestricted
-    - uri: "/"
-      uritype: "prefix"
-      type: "unrestricted"
+  rulesets:
+    - name: general
+      uriPrefix: [ '' ]
+      rules:
+        # token must exist and be valid
+        - uri: "/2023/"
+          uritype: "prefix"
+          type: "valid"
+          onfalse: reject
+        # unrestricted
+        - uri: "/"
+          uritype: "prefix"
+          type: "unrestricted"
 ```
 Please be aware of the order of processing: second rule is less restrictive, but it is executed only in the case the first rule did not match the requested URI. If requested URI matches 2023, first rule would be the last rule to evaluate, since 'ontrue' is 'accept' (default behaviour, so we don't specify it in the YAML) and 'onfalse' has been set to 'reject'.
 
@@ -232,12 +244,15 @@ spec:
             password: p1
           - name: u2
             password: p2
-  ruleset:
-    # if requested uri starts with /home/ user must authenticate 
-    - uri: "/home/"
-      uritype: "prefix"
-      validators:
-        - testBasicAuth
+  rulesets:
+    - name: general
+      uriPrefix: [ '' ]
+      rules:
+        # if requested uri starts with /home/ user must authenticate 
+        - uri: "/home/"
+          uritype: "prefix"
+          validators:
+            - testBasicAuth
 ```
 *Easy* and **classic**, isn't it?
 
@@ -295,20 +310,22 @@ spec:
     - google:
         name: testgoogle
         audience: ENTER-HERE-YOUR-CLIENT-ID
-  ruleset:
-    # unrestricted
-    - uri: "/"
-      uritype: "exact"
-      type: "unrestricted"
-    # user must present a valid (not expired, not corrupt) token
-    - uri: "/protect/"
-      uritype: "prefix"
-      type: "valid"
-      validators: [ testgoogle ]
+  rulesets:
+    - name: general
+      uriPrefix: [ '' ]
+      rules:
+        # unrestricted
+        - uri: "/"
+          uritype: "exact"
+          type: "unrestricted"
+        # user must present a valid (not expired, not corrupt) token
+        - uri: "/protect/"
+          uritype: "prefix"
+          type: "valid"
+          validators: [ testgoogle ]
 ```
 This authorizator:
   1. Allows free access to your website root ("/").
   2. Requires a valid token emitted specifically to your application in order to let the users access the path "/protect/...". This job is done thanks to the use of the **audience** property when defining the validator, where you must enter your client id. If you don't specify and audience, any Google user could use your application.
 
 *Easy* and **googlefied**, isn't it?
-

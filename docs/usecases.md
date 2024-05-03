@@ -9,9 +9,12 @@ In next sections we will discuss different use cases, but showing only the rules
 This is the most simple use case: just granting acess to everyone:
 
 ```yaml
-ruleset:
-  - uri: "/"
-    uritype: "prefix"
+rulesets:
+  - name: general
+    uriPrefix: [ '' ]
+    rules:
+      - uri: "/"
+        uritype: "prefix"
 ```
 In this case every request will be granted.
 
@@ -19,11 +22,14 @@ In this case every request will be granted.
 On the other side, you may want to protect everything you publish, so you want to ensure every user that accesses you applications must present a valid token.
 
 ```yaml
-ruleset:
-  - uri: "/"
-    uritype: "prefix"
-    type: valid
-    onfalse: reject
+rulesets:
+  - name: general
+    uriPrefix: [ '' ]
+    rules:
+      - uri: "/"
+        uritype: "prefix"
+        type: valid
+        onfalse: reject
 ```
 In this case, if a valid token is not presented by the user (via 'Authorization' HTTP header) the request is rejected and no further rule processing is done. If the user presents a valid token the request is granted (although not added to the rule, there is a defualt value for positive evaluation: 'ontrue: accept').
 
@@ -31,15 +37,18 @@ In this case, if a valid token is not presented by the user (via 'Authorization'
 If you want to protect everything you publish but at the same time you need a mechanism to fine tune the accesses to your applications, you should ensure a valid token is present, but after that continue evaluating the rest of the ruleset.
 
 ```yaml
-ruleset:
-  - uri: "/"
-    uritype: "prefix"
-    type: valid
-    onfalse: reject
-    ontrue: continue
-    .
-    .
-    .
+rulesets:
+  - name: general
+    uriPrefix: [ '' ]
+    rules:
+      - uri: "/"
+        uritype: "prefix"
+        type: valid
+        onfalse: reject
+        ontrue: continue
+        .
+        .
+        .
 ```
 In this case, if a valid token is not presented by the user (via 'Authorization' HTTP header) the request is rejected. But, if a valid token is present, the rule engine will continue processing the rest of the rules in the ruleset.
 
@@ -47,28 +56,34 @@ In this case, if a valid token is not presented by the user (via 'Authorization'
 If you want to protect access to an API resource the most simple rule is this one: for a user to access and enpoint that starts with "/api/" the user must present a valid JWT token. The Oberkorn authorizator expects an 'Authorization' header to be present in the request containing a valid token.
 
 ```yaml
-ruleset:
-  - uri: "/api/"
-    uritype: prefix
-    type: valid
+rulesets:
+  - name: general
+    uriPrefix: [ '' ]
+    rules:
+      - uri: "/api/"
+        uritype: prefix
+        type: valid
 ```
 
 Let's do it a bit more complex. We want now to protect access to two different API paths. A user with a valid token can access several API's, but if the user wants to access '/api/admin' or '/api/config' then the token must include a specific claim named 'PROFILE' and the claim must have the value 'ADMIN'. This would be the ruleset for this situation:
 
 ```yaml
-ruleset:
-  - uri: "/api/"
-    uritype: prefix
-    type: valid
-    ontrue: continue
-    onfalse: reject
-  - uri: "^\/api\/admin\/|^\/api\/config\/"
-    uritype: regex
-    type: claim
-    name: PROFILE
-    policy: is
-    values:
-      - ADMIN
+rulesets:
+  - name: general
+    uriPrefix: [ '' ]
+    rules:
+      - uri: "/api/"
+        uritype: prefix
+        type: valid
+        ontrue: continue
+        onfalse: reject
+      - uri: "^\/api\/admin\/|^\/api\/config\/"
+        uritype: regex
+        type: claim
+        name: PROFILE
+        policy: is
+        values:
+          - ADMIN
 ```
 - If the first rule is matched (a request starting with '/api/' is received) and the evaluation of the rule is true (to have a 'valid' token) then the process continues to next rule in the ruleset, as the 'ontrue' behaviour is set to 'continue'.
 - If the first rule is matched (a request starting with '/api/' is received) and the evaluation of the rule is false (the request does not include a 'valid' token) then the process ends and a negative response is sent back to the ingress controller.
@@ -91,48 +106,54 @@ To implement this scenario we have two options (at least):
 We just need 3 rules: one for general users (they must present a valid token), another one for operators (the must have a profile of OPERATOR), and a third one for administrators (with value ADMIN). This could be the answer:
 
 ```yaml
-ruleset:
-  - uri: "/api/data/"
-    uritype: prefix
-    type: valid
-  - uri: "/api/operator/"
-    uritype: prefix
-    type: claim
-    name: USER_PROFILE
-    policy: is
-    values:
-      - OPERATOR
-  - uri: "/api/admin/"
-    uritype: prefix
-    type: claim
-    name: USER_PROFILE
-    policy: is
-    values:
-      - ADMIN
+rulesets:
+  - name: general
+    uriPrefix: [ '' ]
+    rules:
+      - uri: "/api/data/"
+        uritype: prefix
+        type: valid
+      - uri: "/api/operator/"
+        uritype: prefix
+        type: claim
+        name: USER_PROFILE
+        policy: is
+        values:
+          - OPERATOR
+      - uri: "/api/admin/"
+        uritype: prefix
+        type: claim
+        name: USER_PROFILE
+        policy: is
+        values:
+          - ADMIN
 ```
 
 In this case, as you guess, an administrator cannot access the opertors endpoint, so it would be better to write a ruleset like this other:
 
 ```yaml
-ruleset:
-  - uri: "/api/data/"
-    uritype: prefix
-    type: valid
-  - uri: "/api/operator/"
-    uritype: prefix
-    type: claim
-    name: USER_PROFILE
-    policy: is
-    values:
-      - OPERATOR
-      - ADMIN
-  - uri: "/api/admin/"
-    uritype: prefix
-    type: claim
-    name: USER_PROFILE
-    policy: is
-    values:
-      - ADMIN
+rulesets:
+  - name: general
+    uriPrefix: [ '' ]
+    rules:
+      - uri: "/api/data/"
+        uritype: prefix
+        type: valid
+      - uri: "/api/operator/"
+        uritype: prefix
+        type: claim
+        name: USER_PROFILE
+        policy: is
+        values:
+          - OPERATOR
+          - ADMIN
+      - uri: "/api/admin/"
+        uritype: prefix
+        type: claim
+        name: USER_PROFILE
+        policy: is
+        values:
+          - ADMIN
 ```
 That is, assigning two possible values to the claim in the case of '/api/operator'.
 
@@ -141,25 +162,28 @@ That is, assigning two possible values to the claim in the case of '/api/operato
 In case 2 the idea is to assign roles to users, so one possible solution would be:
 
 ```yaml
-ruleset:
-  - uri: "/api/data/"
-    uritype: prefix
-    type: valid
-  - uri: "/api/operator/"
-    uritype: prefix
-    type: claim
-    name: USER_ROLES
-    policy: containsany
-    values:
-      - OPERATOR
-      - ADMIN
-  - uri: "/api/admin/"
-    uritype: prefix
-    type: claim
-    name: USER_ROLES
-    policy: is
-    values:
-      - ADMIN
+rulesets:
+  - name: general
+    uriPrefix: [ '' ]
+    rules:
+      - uri: "/api/data/"
+        uritype: prefix
+        type: valid
+      - uri: "/api/operator/"
+        uritype: prefix
+        type: claim
+        name: USER_ROLES
+        policy: containsany
+        values:
+          - OPERATOR
+          - ADMIN
+      - uri: "/api/admin/"
+        uritype: prefix
+        type: claim
+        name: USER_ROLES
+        policy: is
+        values:
+          - ADMIN
 ```
 
 The second rule will evaluate to true if the claim USER_ROLES contains the text "OPERATOR" or the text "ADMIN". The third rule will evaluate to true if and only if the claim USER_ROLES value is ADMIN (you could alos use here 'conatinsall' or 'containsany' policies, there will be no difference since your are searching for just one concrete value).
@@ -191,27 +215,34 @@ validators:
       name: validator-two
       tenant: corporate
       aud: cde21249-287f-befd-2318-9833bc3cd365
-ruleset:
-  - uri: "/app-one"
-    uritype: prefix
-    type: valid
-    validators:
-      - validator-one
-  - uri: "/app-two"
-    uritype: prefix
-    type: valid
-    validators:
-      - validator-two
+rulesets:
+  - name: general
+    uriPrefix: [ '' ]
+    rules:
+      - uri: "/app-one"
+        uritype: prefix
+        type: valid
+        validators:
+          - validator-one
+      - uri: "/app-two"
+        uritype: prefix
+        type: valid
+        validators:
+          - validator-two
 ```
 
 Very easy, yes, and it is very reconfigurable. Please read this other use case: application 'app-two' can be used by users of audience 'one' and audience 'two'. In this case, just write the second rule like this:
 ```yaml
-  - uri: "/app-two"
-    uritype: prefix
-    type: valid
-    validators:
-      - validator-one
-      - validator-two
+rulesets:
+  - name: general
+    uriPrefix: [ '' ]
+    rules:
+      - uri: "/app-two"
+        uritype: prefix
+        type: valid
+        validators:
+          - validator-one
+          - validator-two
 ```
 
 **Solution for use case 2**
@@ -219,17 +250,20 @@ Very easy, yes, and it is very reconfigurable. Please read this other use case: 
 It's pretty like other examples we've shown before: just checking a claim value.
 
 ```yaml
-ruleset:
-  - uri: "/app-one"
-    uritype: prefix
-    type: claim
-    name: aud
-    policy: is
-    values: ['b8e73549-51bf-4bc2-ade0-6e4983bcd26d']
-  - uri: "/app-two"
-    uritype: prefix
-    type: claim
-    name: aud
-    policy: is
-    values: ['cde21249-287f-befd-2318-9833bc3cd365']
+rulesets:
+  - name: general
+    uriPrefix: [ '' ]
+    rules:
+      - uri: "/app-one"
+        uritype: prefix
+        type: claim
+        name: aud
+        policy: is
+        values: ['b8e73549-51bf-4bc2-ade0-6e4983bcd26d']
+      - uri: "/app-two"
+        uritype: prefix
+        type: claim
+        name: aud
+        policy: is
+        values: ['cde21249-287f-befd-2318-9833bc3cd365']
 ```

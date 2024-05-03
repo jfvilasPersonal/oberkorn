@@ -12,13 +12,14 @@ We plan to add this features in the next months.
       2. Decide whether to add rule priority to rules in a ruleset (and implement it!!).
       3. Add capture groups to URI regexes and conditions on the value of the groups, so rules can contan references to those capture groups of the URIs.
 
-  - Add more validators:
+  - Validators:
       1. ~~Google validator.~~ **DONE**
       2. Github validator.
       3. Facebook validator.
       4. ~~Custom validator. Ability to include external JS or TS code that can be injected in the authorizator as a plugin.~~ **DONE**
       5. External validator. Ability to invoke an external validator (via HTTP/HTTPS).
       6. ~~Basic Auth Secret. It's similar to Basic Auth List but credentials are stored in a Secret, so users can change it's passwords.~~ **DONE**
+      7. It is desirable to have the ability to change password in Basic Auth validator (specially when using 'secret' type). The idea comes from ancient Lotus Domino Go Webserver on IBM mainframe (https://www.ibm.com/docs/en/domino/8.5.3).
 
   - UX:
       1. Add a customizable login page, so applications can be deployed without worrying about authentication nor authorization, I mean, all this tasks would be performed in the Oberkorn authorizator, just by configuring rulesets.
