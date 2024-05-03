@@ -108,7 +108,7 @@ The YAML file we've just see has only 2 rules in the ruleset:
 Securing classic transactional web applications is somehow similar to classic static HTML applications, since there is no differnce between front and APIS (as it occurs in SPA). Let's define a simple example application:
   1. Application front page is index.html, which shows a login form.
   2. The rest of the aplication is made up of ASP pages.
-  3. Static resurces like images, styles and javascript is served from: /media, /css and /js respectively.
+  3. Static resources like images, styles and javascript is served from: /media, /css and /js respectively.
   4. Let's suppose there is an Azure B2C in place for protecting this applications.
 
 In order to build a protection layer based on Oberkorn we should deploy an Oberkorn authorizator like this one:
