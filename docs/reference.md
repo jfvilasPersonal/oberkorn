@@ -418,7 +418,7 @@ rules:
     type: unrestricted
 ```
 
-In this case, the authroizator will evaluate all three paths (static, js and css) against user request.
+In this case, the authorizator will evaluate all three paths (static, js and css) against user request.
 
 ##### uritype [string] [mandatory]
 Every URI in a rule can be one of this types:

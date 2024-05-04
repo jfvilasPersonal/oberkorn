@@ -61,7 +61,7 @@ kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/obk-controlle
 This YAML:
   - Creates a Kubernetes service for accessing the controller console endpoint (typically exposed at http://your.dns.name:3882/obk-console).
   - Creates an ingress for accessing the web console (path '/obk-console') and its API (on the same endpoint).
-  - Creates an Oberkorn Authroizator to protect the access to the console.
+  - Creates an Oberkorn Authorizator to protect the access to the console.
 
 You have some more detaled documentation on the section [Web Console](/webconsole).
 

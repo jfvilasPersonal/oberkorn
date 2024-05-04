@@ -34,9 +34,9 @@ This sample YAML:
   - Creates an Oberkorn Authorizator to protect access to the console.
 
 ### Enabling APIs
-Enabling the web console is done by configuring the controller, but having the ability to access an Oberkorn Authroizator API is something you must do by modifying Authorizators configuration.
+Enabling the web console is done by configuring the controller, but having the ability to access an Oberkorn Authorizator API is something you must do by modifying Authorizators configuration.
 
-The first step is easy. In the YAML you used to create the Authroizator you need to add a new parameter to the 'config' section, like the sample bellow. There is no doubt on what parameter we are talking about, it is named '**api**'.
+The first step is easy. In the YAML you used to create the Authorizator you need to add a new parameter to the 'config' section, like the sample bellow. There is no doubt on what parameter we are talking about, it is named '**api**'.
 
 ```yaml
 spec:
