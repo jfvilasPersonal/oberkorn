@@ -23,7 +23,7 @@ This will create a CRD which you will use to create your authorizators.
 The controller is the software component in charge of managing your authorizators. It listens for kubernetes events like ADD, DELETE o MODIFY anytime you create, remove or modify one authorizator. To deploy the controller you just need to apply a YAML that contains several definitions.
 
 ```sh
-kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/obk-controller/main/crd/controller.yaml
+kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/obk-controller/main/crd/controller-deployment.yaml
 ```
 
 The controller YAML contains several kubernetes resources:
@@ -38,7 +38,7 @@ You can check whether the controller is ready by examining controller stdout (th
 #### **Step 3**. Enable the web console (**optional**).
 Since version 0.3, Oberkorn has add some intersting capabilities in the controller and also in the authorizators:
 
-  - The Oberkorn authorizators can expose an API for interactiong with them ina programatic way (enabling this API interface is optional).
+  - The Oberkorn authorizators can expose an API for interactiong with them in a programatic way (enabling this API interface is optional).
   - The Oberkorn controller provides a web console (which intearacts with authorizators API), which you can use to interact with them from your favourite browser.
 
 To enable the web console you must follow these steps:
@@ -53,6 +53,22 @@ To enable the web console you must follow these steps:
     - Add protection to the APIs.
 
 You can see the details in the **Enabling Web Console** section.
+
+To launch the web console you can just simply apply this YAML:
+
+```sh
+kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/obk-controller/main/crd/controller-webconsole.yaml
+```
+
+This YAML:
+  - Creates a service for accessing the controller console endpoint (typically exposed at http://your.dns.name:3882/obk-console).
+  - Creates an ingress for accessing the web console SPA (path '/obk-console') and the web console authorizator API (path '/obk-authorizator/obk-console-authorizator').
+  - Creates an Oberkorn Authroizator to protect the access to the console.
+
+
+## Enabling web console
+WIP: detail all the steps to do it manually
+
 
 ## Next step
 Everyting is ready! Next you should check if there is any special configuration that you must perform depending on the ingress controller you are using. Continue to [Ingress configuration](/ingress-configuration).
