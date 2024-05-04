@@ -51,6 +51,40 @@ You can specify how many containers will be running in parallel in order to fulf
 ##### api [boolean] [optional] [default: false]
 If you want to manage the authorizator via API or you want to use the controller web console to manage the authorizator, you must enable the API interface (and do some addiotional configuration on services and ingresses in order to make the API reachable from outside the cluster).
 
+API must be enabled if you plan to manage your authorizator via the Oberkorn web console. Enabling API enables then endpoint, but it will be only accesible inside the cluster, which is engough for using the web console. But, if you plan to access authorizator API from outside the cluser (for example, for managing your authorizator from your operations tools, like Ansible, puppet, VROps, etc.), you must publish the endpint via an ingress.
+
+When you create an authorizator, the controller creates a service to encapsulate access to all replicas of the authorizator. Such service is named:
+
+```yaml
+obk-authorizator-YOURAUTHORIZTORNAME-svc
+```
+
+That is, if you create an authorizator named 'auth1', the service would be named: obk-authorizator-auth1-svc.
+
+So, in order to access this authorizator form outside the cluster, you would create an ingress rule like this inside your ingress:
+
+```yaml
+rules:
+- host: localhost
+  http:
+    paths:
+      # access to authrizator API (not needed by the console, but useful if you to manage authorizator externally)
+      - path: /obk-authorizator/dev/auth1
+        pathType: Prefix
+        backend:
+          service:
+            name: obk-authorizator-auth1-svc
+            port:
+              number: 3882
+```
+Please pay attention to the path, which is formed by:
+
+  - A fixed prefix, '**obk-authorizator**'.
+  - The authorizator namespace, '**dev**' in this sampe.
+  - The authorizator name, '**auth1**' in thsi sample.
+
+As you can see, request received at that path would be routed to the service named '**obk-authorizator-auth1-svc**'.
+
 ##### logLevel [number] [optional] [default: 0]
 If your want to have more info on what is doing the authorizator you can increase the log level. Default value (0), only shows authorizator starting info and severe errors.
 

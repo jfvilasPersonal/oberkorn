@@ -36,7 +36,7 @@ The controller YAML contains several kubernetes resources:
 You can check whether the controller is ready by examining controller stdout (the logs of the pod) and searching for the message "Oberkorn Controller is watching events...".
 
 #### **Step 3**. Enable the web console (**optional**).
-Since version 0.3, Oberkorn has add some intersting capabilities in the controller and also in the authorizators:
+Since version 0.3, Oberkorn includes some intersting capabilities in the controller and also in the authorizators:
 
   - The Oberkorn authorizators can expose an API for interactiong with them in a programatic way (enabling this API interface is optional).
   - The Oberkorn controller provides a web console (which intearacts with authorizators API), which you can use to interact with them from your favourite browser.
@@ -44,25 +44,23 @@ Since version 0.3, Oberkorn has add some intersting capabilities in the controll
 To enable the web console you must follow these steps:
 
   - Regarding the **controller**:
-    - Enable the console.
+    - Enable the console capability.
     - Expose the web console externaly through an ingress (your favourite one).
-    - Add a protection to the console (require admin credentials to enter the console).
+    - Add a protection to the console (for example, require 'admin' credentials to enter the console).
   - Regarding the **authorizators**:
     - Enable the API.
-    - Expose the API interface externaly through an ingress (your favourite one).
-    - Add protection to the APIs.
+    - Expose the API interface externaly through an ingress (your favourite one). This is optional, since web console access authorizators API through the cluster network. You should create ingress access if you plan to invoke authorizators API for other purposes than using the web console.
+    - If you publish the APIs externally throughan ingress, you should add protection to the APIs.
 
-You can see the details in the **Enabling Web Console** section.
-
-To launch the web console you can just simply apply this YAML:
+To enable the the web console on a basic install you can just simply apply this YAML:
 
 ```sh
 kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/obk-controller/main/crd/controller-webconsole.yaml
 ```
 
 This YAML:
-  - Creates a service for accessing the controller console endpoint (typically exposed at http://your.dns.name:3882/obk-console).
-  - Creates an ingress for accessing the web console SPA (path '/obk-console') and the web console authorizator API (path '/obk-authorizator/obk-console-authorizator').
+  - Creates a Kubernetes service for accessing the controller console endpoint (typically exposed at http://your.dns.name:3882/obk-console).
+  - Creates an ingress for accessing the web console (path '/obk-console') and its API (on the same endpoint).
   - Creates an Oberkorn Authroizator to protect the access to the console.
 
 You have some more detaled documentation on the section [Web Console](/webconsole).
