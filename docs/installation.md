@@ -65,10 +65,7 @@ This YAML:
   - Creates an ingress for accessing the web console SPA (path '/obk-console') and the web console authorizator API (path '/obk-authorizator/obk-console-authorizator').
   - Creates an Oberkorn Authroizator to protect the access to the console.
 
-
-## Enabling web console
-WIP: detail all the steps to do it manually
-
+You have some more detaled documentation on the section [Web Console](/webconsole).
 
 ## Next step
 Everyting is ready! Next you should check if there is any special configuration that you must perform depending on the ingress controller you are using. Continue to [Ingress configuration](/ingress-configuration).
