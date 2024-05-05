@@ -5,7 +5,14 @@ Oberkorn has a builtin web console since version 0.3. The very first version jus
 The web console has been designed to work as a standard web application, the front has been developed using ReactTS 18, and the API's are served from the controller and the authorizators from an [**express**](http://expressjs.com) framework.
 
 #### Architecture
-WIP include a diagram here and add some details
+This picture show global web console architecture, including threee main components:
+
+  - The controller, which is in charge of serving the frontapplicationion and the API.
+  - A console authorizator (top-right), in charge of securing console access.
+  - Ingress, in charge of allowing access to the console from outside the cluster.
+
+![Web console architecture](/_media/webconsole/webconsole-architecture.png)
+
 
 ### Enabling the console
 The first step to enable the console is realy simple: in the spec of the deployment of the controller you must add (or change if it already exists) an environment variable named '**OBKC_CONSOLE**', setting its value to '**true**'. See the sample bellow:
