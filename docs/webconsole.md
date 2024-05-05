@@ -15,7 +15,7 @@ This picture show global web console architecture, including threee main compone
 
 
 ### Enabling the console
-The first step to enable the console is realy simple: in the spec of the deployment of the controller you must add (or change if it already exists) an environment variable named '**OBKC_CONSOLE**', setting its value to '**true**'. See the sample bellow:
+The first step to enable the console is realy simple: in the spec of the deployment of the controller you must add (or change if it already exists) an environment variable named '**OBKC_CONSOLE**', setting its value to '**true**'. See the sample below:
 
 ```yaml
 spec:
@@ -43,7 +43,7 @@ This sample YAML:
 ### Enabling APIs
 Enabling the web console is done by configuring the controller, but having the ability to access an Oberkorn Authorizator API is something you must do by modifying Authorizators configuration.
 
-The first step is easy. In the YAML you used to create the Authorizator you need to add a new parameter to the 'config' section, like the sample bellow. There is no doubt on what parameter we are talking about, it is named '**api**'.
+The first step is easy. In the YAML you used to create the Authorizator you need to add a new parameter to the 'config' section, like the sample below. There is no doubt on what parameter we are talking about, it is named '**api**'.
 
 ```yaml
 spec:

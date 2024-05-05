@@ -19,7 +19,7 @@ We plan to add this features in the next months.
       4. ~~Custom validator. Ability to include external JS or TS code that can be injected in the authorizator as a plugin.~~ **DONE**
       5. External validator. Ability to invoke an external validator (via HTTP/HTTPS).
       6. ~~Basic Auth Secret. It's similar to Basic Auth List but credentials are stored in a Secret, so users can change it's passwords.~~ **DONE**
-      7. It is desirable to have the ability to change password in Basic Auth validator (specially when using 'secret' type). The idea comes from ancient Lotus Domino Go Webserver on IBM mainframe (https://www.ibm.com/docs/en/domino/8.5.3).
+      7. ~~It is desirable to have the ability to change password in Basic Auth validator (specially when using 'secret' type). The idea comes from ancient Lotus Domino Go Webserver on IBM mainframe (https://www.ibm.com/docs/en/domino/8.5.3).~~ **DONE**
       8. Create an INLINE validator, or an 'Obklidator', that is:
          - Enable a customizable login page (a default one, and a zipped one stored in a configMap).
          - Enable endpoint and show login page.

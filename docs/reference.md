@@ -255,6 +255,23 @@ Type of storage used for storing users and passwords. Two values are possible:
   - '**inline**', users are read from the validator configuration YAML.
   - '**secret**', users are read from the validator YAML if the exist, and will be stored and retrieved in a Kubernetes secret.
 
+'inline' users database is just the YAML, while 'secret' users database is a Kuberntes secret. This implies two main differences:
+
+  - Users database (users and also its passwords) are static in 'inline' store type, they com form the authorizator YAML and they are always the same.
+  - Users database is stored on a Kubernetes secret on 'secret' store type, so passwords are cyphered (at least they are protected since they are stored outside the YAML), and thus **they are variable**. I mean, if you recreate a type 'secret' authorizator, the users/passwords database will be read from the kubernetes secret, no matter which users and passwords are present in the authorizator YAML.
+
+But there is a third difference very important: in 'secret' store type, users **can change their passwords**, so...
+  1. You initialize the passwords when you create the authorizator.
+  2. Users and passwords are cpied (or merged) with the ones present in the Kubernetes secret.
+  3. User can change their passwords when signing in, as we explain below.
+
+###### Change password
+For a user to change its password with Basic Auth authrizators of 'secret' type, the must follow this procedure:
+  1. Try to access the protected resource (a web page or whatever).
+  2. Your browser will ask you to enter a user and a password. At this moment enter your user and for the password field enter: your **current password** followed by **one blank space** followed by the **new password**.
+  3. The browser will ask you to enter your credentials again. At this moment you must enter your user and the new password (this is the confirmation step).
+  4. From now on, you have a new password. Enjoy it an duse it responsibily!
+
 ##### storeSecret [string] [optional]
 Yhe name of a Kubernetes secret where users and passwords will be stored.
 
