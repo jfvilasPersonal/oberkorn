@@ -270,7 +270,7 @@ For a user to change its password with Basic Auth authrizators of 'secret' type,
   1. Try to access the protected resource (a web page or whatever).
   2. Your browser will ask you to enter a user and a password. At this moment enter your user and for the password field enter: your **current password** followed by **one blank space** followed by the **new password**.
   3. The browser will ask you to enter your credentials again. At this moment you must enter your user and the new password (this is the confirmation step).
-  4. From now on, you have a new password. Enjoy it an duse it responsibily!
+  4. From now on, you have a new password. Enjoy it and use it responsibily!
 
 ##### storeSecret [string] [optional]
 Yhe name of a Kubernetes secret where users and passwords will be stored.
