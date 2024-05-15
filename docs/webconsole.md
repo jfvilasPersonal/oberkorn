@@ -1,11 +1,11 @@
 # Web Console
-Oberkorn has a builtin web console since version 0.3. The very first version just added some 'reading' capabilities, that is, you can view the status or configuration of your authrizators, but you can't do any changes to the controller nor the authorizators.d
+Oberkorn has a builtin web console since version 0.3. The very first version just added some 'reading' capabilities, that is, you can view the status or configuration of your authrizators, the validators, the rulesets..., but you can't do any changes to the controller nor the authorizators.d
 
 ### How do the web console work?
-The web console has been designed to work as a standard web application, the front has been developed using ReactTS 18, and the API's are served from the controller and the authorizators from an [**express**](http://expressjs.com) framework.
+The web console has been designed to work as a standard web application, the front has been developed using ReactTS 18, and the API's are served from the controller and the authorizators using an [**express**](http://expressjs.com) framework.
 
 #### Architecture
-This picture show global web console architecture, including threee main components:
+This picture shows global web console architecture, including three main components:
 
   - The controller, which is in charge of serving the frontapplicationion and the API.
   - A console authorizator (top-right), in charge of securing console access.
@@ -41,7 +41,7 @@ This sample YAML:
   - Creates an Oberkorn Authorizator to protect access to the console.
 
 ### Enabling APIs
-Enabling the web console is done by configuring the controller, but having the ability to access an Oberkorn Authorizator API is something you must do by modifying Authorizators configuration.
+Enabling the web console is done by configuring the controller, but having the ability to access an Oberkorn Authorizator API is something you must do by modifying Authorizators configuration and/or the controller configuration.
 
 The first step is easy. In the YAML you used to create the Authorizator you need to add a new parameter to the 'config' section, like the sample below. There is no doubt on what parameter we are talking about, it is named '**api**'.
 
@@ -53,9 +53,38 @@ spec:
     logLevel: 1
 ```
 
-Parameter **api** set to 'true' will enable the API endpoint of the authorizator (defualt value is 'false').
+Parameter **api** set to 'true' will enable the API endpoint of the authorizator (default value is 'false').
 
-You have nothing else to do in the authorizator. Now, when you access the web console you should see your Authorizator in the selector of the console.
+You have nothing else to do in the authorizators.
+
+By default, the authroizators API is not accesible from outside the cluster, so, for the console to run properly you need to enable a **proxy** feature included in the controller. This feature:
+
+  - Exposes and API endpoint at the controller, the one the web console will use for obtaining data and sending commands to the authorizators.
+  - The controller API exposes just 2 endpoints:
+    - One endpoint that allows obtaining then list of authorizators that have an API endpoint enabled, that is, the ones you can manage using the web console.
+    - A second proxy endpoint is enabled which is responsible of redirecting web console requests to authroizator endpoints using internal kubernetes cluster network. This way, authorizators endpoint do not need to be publicly accesible.
+
+To enable the controller API you just need to add a new environment variable, like the sample below:
+
+```yaml
+spec:
+  serviceAccount: obk-controller-sa
+  containers:
+    - name: obk-controller
+      image: obk-controller
+      imagePullPolicy: IfNotPresent
+      ports:
+        - containerPort: 3882
+      env:
+        - name: OBKC_LOG_LEVEL
+          value: '2'
+        - name: OBKC_CONSOLE
+          value: 'true'
+        - name: OBKC_API
+          value: 'true'
+```
+
+Now, when you access the web console you should see your Authorizators (the ones that have API enabled) in the selector of the Welcome page of the console.
 
 
 ### Accessing the web console
