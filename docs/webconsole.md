@@ -99,3 +99,6 @@ If you enter the strong admin credentials correctly you'll see the console home 
 The homepage is easy to understand, it only contains a selector for selecting which authorizator do you want to work with. At least, you should see here one authorizator, which is in fact the authorizator that protects web console access. When you select an authorizator you enter the console main page, which is self-explaining.
 
 ![Authorizator Overview](/_media/webconsole/webconsole-overview.png)
+
+
+//+++ document console functionalities (add screenshots)
