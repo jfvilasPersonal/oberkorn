@@ -33,7 +33,7 @@ We plan to add this features in the next months.
       3. Create a fashionable demo application where Oberkorn authorizators can be defined, tested and deployed.
       4. Add 'fcgiwrap' to NGINX-based demo container so Google tokens can be moved from POST body to GET query string.
       5. Add managing capabilities to the console, I mean, to be able to modify *things* in the authorizators.
-      6. Add graphics/dashboards to the console.
+      6. ~~Add graphics/dashboards to the console.~~ **DONE**
 
   - Token invalidation:
       1. Invalidate token according to claim values (requires having an admin console).
@@ -44,11 +44,11 @@ We plan to add this features in the next months.
       2. Use different available keys (from JWKS config) when validating tokens.
 
   - Tracing & Audit:
-      1. Monitor and trace a specific user (i.e., token).
+      1. ~~Monitor and trace a specific user (i.e., token).~~ **DONE**
       
   - Monitoring
       1. Performance monitoring, we need to add some additional metrics.
-      2. Integrate with Grafana.
+      2. Integrate with Prometheus.
 
 ### Controller features
 We plan to improve controller by:

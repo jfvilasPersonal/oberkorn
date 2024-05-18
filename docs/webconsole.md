@@ -102,3 +102,35 @@ The homepage is easy to understand, it only contains a selector for selecting wh
 
 
 //+++ document console functionalities (add screenshots)
+
+### Using te web console
+These are the main sections of the web console menu:
+
+  - **Overview**: you can review general authoizator configuration and some statistical info about authorizator and validator usage
+  - **Validators**: information about the different validators included in the authorizator.
+  - **Rulesets**: information about all rulesets defined in the authorizator.
+  - **Actions**: you can perform several diagnotics and tracing activities here.
+
+#### Ovreview
+
+#### Validators
+
+#### Rulesets
+
+#### Actions
+The actions main menu option leads you to a diagnostics section. First thing to do here is selecting the validator you want to work with. Once selected the tabbed section will enable, allowing you to:
+
+  - Diagnose.
+  - Trace (obtaining real-time information on what a user is doing).
+
+##### Diagnose
++++summary here
++++picture hire
+##### Trace
+Tracing will show real-tiem events related to a specific user you want to trace. Just type-in the user name to trace and click start. As soon as the users performs any secutity-related action, the action descrition will be shown here. You can view here actions like 'Sing in ok', 'Invalid password', 'Vlaid token', etc...
+
++++picture here
+
+You can stop the trace any time.
+
+Please keep in mind all the authorizator replicas will send information to the console about the users you want to trace. This si done by the controller sending trraciong configuration to all the replicas, and furthermore, the web console querying the authorizator replicas repeatedly (4 times in a second).
