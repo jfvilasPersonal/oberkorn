@@ -101,8 +101,6 @@ The homepage is easy to understand, it only contains a selector for selecting wh
 ![Authorizator Overview](/_media/webconsole/webconsole-overview.png)
 
 
-//+++ document console functionalities (add screenshots)
-
 ### Using te web console
 These are the main sections of the web console menu:
 
@@ -111,11 +109,16 @@ These are the main sections of the web console menu:
   - **Rulesets**: information about all rulesets defined in the authorizator.
   - **Actions**: you can perform several diagnotics and tracing activities here.
 
-#### Ovreview
+#### Overview
+General information about the authroizator (this does not include specific info on the validators).
 
 #### Validators
+List of validators and their current configuration.
 
 #### Rulesets
+List of rulesets and their current configuration.
+
+![Rulets info](/_media/webconsole/webconsole-diagnostics.png)
 
 #### Actions
 The actions main menu option leads you to a diagnostics section. First thing to do here is selecting the validator you want to work with. Once selected the tabbed section will enable, allowing you to:
@@ -123,14 +126,24 @@ The actions main menu option leads you to a diagnostics section. First thing to 
   - Diagnose.
   - Trace (obtaining real-time information on what a user is doing).
 
+##### Invalidate
+You can use the web console to invalidate a token by specifying some invalidation criteria. You can set:
+
+  - **User name**, invalidate a token when the token has been issued for a specific user name.
+  - **Claim name**, invalidate a token when the token contains a specific claim.
+  - **Audience**, invalidate a token when the token has been issued for a specific audience.
+  - **Issuer**, invalidate a token when the token has been issued by a specific issuer.
+
+You just need to specify the criteria and click set. Next time a token matching the criteria wold be presented by a client (a user or any application accessing a protected web resource) the access will be rejected, and a 401 will be sent to the requestor.
+
+![Invalidation](/_media/webconsole/webconsole-invalidate.png)
+
+
 ##### Diagnose
-+++summary here
-+++picture hire
-##### Trace
 Tracing will show real-tiem events related to a specific user you want to trace. Just type-in the user name to trace and click start. As soon as the users performs any secutity-related action, the action descrition will be shown here. You can view here actions like 'Sing in ok', 'Invalid password', 'Vlaid token', etc...
 
-+++picture here
+![Tracing](/_media/webconsole/webconsole-diagnostics.png)
 
 You can stop the trace any time.
 
-Please keep in mind all the authorizator replicas will send information to the console about the users you want to trace. This si done by the controller sending trraciong configuration to all the replicas, and furthermore, the web console querying the authorizator replicas repeatedly (4 times in a second).
+Please keep in mind all the authorizator replicas will send information to the console about the users you want to trace. This is done by the controller sending tracing configuration to all the replicas, and furthermore, the web console querying the authorizator replicas repeatedly (4 times in a second).
