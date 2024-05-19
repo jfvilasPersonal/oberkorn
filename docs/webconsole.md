@@ -118,7 +118,7 @@ List of validators and their current configuration.
 #### Rulesets
 List of rulesets and their current configuration.
 
-![Rulets info](/_media/webconsole/webconsole-diagnostics.png)
+![Rulets info](/_media/webconsole/webconsole-rulesets.png)
 
 #### Actions
 The actions main menu option leads you to a diagnostics section. First thing to do here is selecting the validator you want to work with. Once selected the tabbed section will enable, allowing you to:
