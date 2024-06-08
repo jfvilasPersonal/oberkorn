@@ -14,7 +14,7 @@ Once everything is ok, you can start deploying Oberkorn authorizators to protect
 You can download and review the CRD or you can just apply it to your cluster. **Applying a CRD is not harmful**.
 
 ```sh
-kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/obk-controller/main/crd/crd.yaml
+kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/obk-controller/main/installation/crd.yaml
 ```
 
 This will create a CRD which you will use to create your authorizators.
@@ -23,7 +23,7 @@ This will create a CRD which you will use to create your authorizators.
 The controller is the software component in charge of managing your authorizators. It listens for kubernetes events like ADD, DELETE o MODIFY anytime you create, remove or modify one authorizator. To deploy the controller you just need to apply a YAML that contains several definitions.
 
 ```sh
-kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/obk-controller/main/controller-deployment.yaml
+kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/obk-controller/main/installation/controller-deployment.yaml
 ```
 
 The controller YAML contains several kubernetes resources:
@@ -55,7 +55,7 @@ To enable the web console you must follow these steps:
 To enable the the web console on a basic install you can just simply apply this YAML:
 
 ```sh
-kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/obk-controller/main/controller-webconsole.yaml
+kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/obk-controller/main/installation/controller-webconsole.yaml
 ```
 
 This YAML:
