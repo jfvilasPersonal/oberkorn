@@ -33,7 +33,7 @@ spec:
           value: 'true'
 ```
 
-For the web console to be accesible from outside the cluster you can just use port forwarding, but it is a better idea to enable an ingress and a service in order to enable access to the controller. Please review [default web console sample](https://raw.githubusercontent.com/jfvilasPersonal/obk-controller/main/controller-webconsole.yaml).
+For the web console to be accesible from outside the cluster you can just use port forwarding, but it is a better idea to enable an ingress and a service in order to enable access to the controller. Please review [default web console sample](https://raw.githubusercontent.com/jfvilasPersonal/obk-controller/main/installation/controller-webconsole.yaml).
 
 This sample YAML:
   - Creates a service to expose port 3882 of the controller.

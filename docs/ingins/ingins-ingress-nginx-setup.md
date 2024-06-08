@@ -23,7 +23,7 @@ Our demo application is in [one of our repositories](https://github.com/jfvilasP
 Deploying our demo application is simple, you just only need to apply a YAML to your kubernetes cluster:
 
 ```sh
-kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/obk-demo/main/demo-nginx.yaml
+kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/obk-demo/main/deployment-demo.yaml
 ```
 
 This creates a deployment and a service for accessing the application inside the pod. Once installed you should be able to reach it on port 81 (the service in the YAML publishes port 80 and redirects users to port 80 served by nginx demo application)
@@ -34,7 +34,7 @@ Once the demo application and the ingress controller are installed and running, 
 Just apply this YAML to create an ingress that  points to our demo application:
 
 ```sh
-kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/obk-controller/main/test/ingress-jfvilas.yaml
+kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/obk-demo/main/ingress-jfvilas.yaml
 ```
 
 ## Test

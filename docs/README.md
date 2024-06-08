@@ -19,7 +19,7 @@ What follows is a simple installation and starting guide.
 **Step 1**. Create the CRD.
 
 ```sh
-kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/obk-controller/main/crd/crd.yaml
+kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/obk-controller/main/installation/crd.yaml
 ```
 
 This will create a CRD which you will use to create your ahtorizators.
@@ -28,7 +28,7 @@ This will create a CRD which you will use to create your ahtorizators.
 The controller is the software component in charge of managing your authorizators. It listens for kubernetes events like ADD, DELETE o MODIFY anytime you create, remove or modify one authorizator. To deploy the controller you just need to apply following YAML.
 
 ```sh
-kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/obk-controller/main/crd/controller.yaml
+kubectl apply -f https://raw.githubusercontent.com/jfvilasPersonal/obk-controller/main/installation/controller-deployment.yaml
 ```
 
 The controller YAML contains several kubernetes resources:
@@ -83,7 +83,7 @@ Please check [our homepage](https://jfvilaspersonal.github.io/oberkorn) with all
 ## Architecture primer
 Here you can see the overall Oberkorn architecture.
 
-![Oberkorn architecture](https://github.com/jfvilasPersonal/oberkorn/blob/main/docs/_media/architecture/oberkorn-architecture.png)
+![Oberkorn architecture](https://raw.githubusercontent.com/jfvilasPersonal/oberkorn/main/docs/_media/architecture/oberkorn-architecture.png)
 
 What you see is:
   1. Oberkorn images are stored and publiclly accessible in Docker Hub.
